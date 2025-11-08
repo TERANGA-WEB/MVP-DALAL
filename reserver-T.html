@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalal Pro - Voiture & Paiement</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E5E4E;
+            --secondary: #E1C85C;
+            --white: #FFFFFF;
+            --light-bg: #f5f7fa;
+            --gray: #e1e8ed;
+            --dark-gray: #333333;
+            --shadow: 0 10px 30px rgba(46, 94, 78, 0.1);
+            --radius: 12px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .desktop-nav {
+            display: flex;
+            gap: 35px;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .desktop-nav a:hover {
+            color: var(--secondary);
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        /* Pages Container */
+        .pages-container {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .page {
+            transition: all 0.4s ease-in-out;
+            padding-top: 100px;
+        }
+
+        .page.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* PAGE 1 - Détail Voiture */
+        .main-content {
+            margin-top: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(46, 94, 78, 0.3);
+        }
+
+        .voiture-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .voiture-gallery {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .image-thumbnails {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail.active {
+            opacity: 1;
+            border: 2px solid var(--primary);
+        }
+
+        .voiture-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #E1C85C;
+            color: #2E5E4E;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .voiture-info {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .voiture-header {
+            margin-bottom: 25px;
+        }
+
+        .voiture-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .voiture-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .voiture-price {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 20px;
+        }
+
+        .voiture-price span {
+            font-size: 0.7em;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .reserve-btn-top {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .reserve-btn-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 94, 78, 0.4);
+        }
+
+        .voiture-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        .voiture-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2E5E4E;
+        }
+
+        .feature i {
+            color: #E1C85C;
+            font-size: 1.2em;
+        }
+
+        .equipements {
+            margin-bottom: 25px;
+        }
+
+        .equipements h3 {
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .equipements-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .equipement-tag {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* Voitures similaires */
+        .similar-voitures {
+            margin-top: 50px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .similar-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .similar-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .similar-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .similar-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .similar-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #E1C85C;
+            color: #2E5E4E;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.6em;
+            font-weight: 600;
+        }
+
+        .similar-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .similar-title {
+            font-size: 0.95em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .similar-location {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #666;
+            margin-bottom: 8px;
+            font-size: 0.75em;
+        }
+
+        .similar-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.7em;
+            color: #2E5E4E;
+        }
+
+        .similar-feature {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .similar-price {
+            font-size: 1em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .similar-price span {
+            font-size: 0.7em;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .voir-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-decoration: none;
+            font-size: 0.8em;
+            width: 100%;
+        }
+
+        .voir-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(46, 94, 78, 0.3);
+        }
+
+        /* PAGE 2 - Paiement */
+        .payment-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .payment-header h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .order-summary {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .payment-option {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary);
+            background-color: #f0fff8;
+        }
+        
+        .payment-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-payment, .bank-payment {
+            margin: 30px 0;
+        }
+        
+        .payment-section-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .payment-form {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .pay-button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .pay-button:hover {
+            background-color: #d4b747;
+        }
+        
+        .security-badge {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .payment-back-btn {
+            background: rgba(46, 94, 78, 0.1);
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .payment-back-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1024px) {
+            .similar-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .voiture-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-content {
+                margin-top: 0;
+                padding: 15px;
+            }
+            
+            .voiture-title {
+                font-size: 1.6em;
+            }
+            
+            .voiture-price {
+                font-size: 1.8em;
+            }
+
+            .similar-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .payment-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .voiture-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 10px;
+            }
+
+            .similar-container {
+                grid-template-columns: 1fr;
+            }
+
+            .similar-image {
+                height: 120px;
+            }
+
+            .similar-content {
+                padding: 12px;
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="logodalal.jpg" alt="Logo Dalal Sénégal">
+                <div class="logo-text">Dalal</div>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="/logement.html">Logement</a>
+                <a href="/transport.html">Transport</a>
+                <a href="/decouverte.html">Découverte</a>
+                <a href="creecompte.html">s'inscrire</a> 
+                <a href="/plus.html">Plus</a>
+            </nav>
+            
+            <button class="menu-toggle" aria-label="Ouvrir le menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="pages-container">
+        <!-- PAGE 1 - Détail Voiture -->
+        <div id="page1" class="page active">
+            <main class="main-content">
+                <a href="transport.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour aux transports
+                </a>
+
+                <div class="voiture-detail" id="voitureDetail">
+                    <!-- Le contenu sera généré dynamiquement par JavaScript -->
+                </div>
+
+                <!-- Section Voitures Similaires -->
+                <div class="similar-voitures">
+                    <h2 class="section-title">Voitures Similaires</h2>
+                    <div class="similar-container" id="similarVoitures">
+                        <!-- Les voitures similaires seront générés dynamiquement -->
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>Dalal Pro</h3>
+                        <p>Votre partenaire de confiance pour trouver les meilleurs logements au Sénégal.</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Suivez-nous sur Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Suivez-nous sur Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Suivez-nous sur Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Suivez-nous sur YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Nos Services</h3>
+                        <ul>
+                            <li><a href="/logement.html">Logement meublé</a></li>
+                            <li><a href="/transport.html">Location voiture</a></li>
+                            <li><a href="/decouverte.html">Excursions</a></li>
+                            <li><a href="/decouverte.html">Circuits sur mesure</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Contact</h3>
+                        <ul>
+                            <li><i class="fas fa-envelope"></i> info@dalalpro.sn</li>
+                            <li><i class="fas fa-phone"></i> +221 33 123 45 67</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2023 Dalal Pro. Tous droits réservés.</p>
+                </div>
+            </footer>
+        </div>
+
+        <!-- PAGE 2 - Paiement -->
+        <div id="page2" class="page hidden">
+            <div class="payment-container">
+                <button class="payment-back-btn" onclick="showPage('page1')">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour aux détails
+                </button>
+
+                <div class="payment-header">
+                    <h1>🚗 Paiement Sécurisé Dalal</h1>
+                    <p>Finalisez votre réservation en toute sécurité</p>
+                </div>
+                
+                <div class="order-summary">
+                    <h3>Récapitulatif de réservation</h3>
+                    <p><strong id="reservation-voiture">Voiture #</strong></p>
+                    <p>Total à payer : <strong id="reservation-prix">0 FCFA</strong></p>
+                </div>
+                
+                <h2 class="payment-section-title">Choisissez votre moyen de paiement</h2>
+                
+                <div class="payment-methods">
+                    <!-- Paiements Mobiles Sénégal -->
+                    <div class="payment-option" data-method="orange">
+                        <div class="payment-icon">🟠</div>
+                        <h3>Orange Money</h3>
+                        <p>Paiement mobile</p>
+                    </div>
+                    
+                    <div class="payment-option" data-method="wave">
+                        <div class="payment-icon">🌊</div>
+                        <h3>Wave</h3>
+                        <p>Paiement mobile</p>
+                    </div>
+                    
+                    <div class="payment-option" data-method="free">
+                        <div class="payment-icon">🟡</div>
+                        <h3>Free Money</h3>
+                        <p>Paiement mobile</p>
+                    </div>
+                    
+                    <!-- Paiements Bancaires -->
+                    <div class="payment-option" data-method="carte">
+                        <div class="payment-icon">💳</div>
+                        <h3>Carte Bancaire</h3>
+                        <p>Visa/Mastercard</p>
+                    </div>
+                    
+                    <div class="payment-option" data-method="virement">
+                        <div class="payment-icon">🏦</div>
+                        <h3>Virement</h3>
+                        <p>Transfert bancaire</p>
+                    </div>
+                    
+                    <div class="payment-option" data-method="portefeuille">
+                        <div class="payment-icon">👛</div>
+                        <h3>Portefeuille Dalal</h3>
+                        <p>Solde disponible</p>
+                    </div>
+                </div>
+                
+                <!-- Formulaire Orange Money -->
+                <div id="form-orange" class="payment-form">
+                    <h3>Paiement par Orange Money</h3>
+                    <div class="form-group">
+                        <label for="orange-number">Numéro Orange Money</label>
+                        <input type="tel" id="orange-number" placeholder="77 123 45 67" maxlength="9">
+                    </div>
+                    <button class="pay-button" onclick="processPayment('orange')">Payer avec Orange Money</button>
+                </div>
+                
+                <!-- Formulaire Wave -->
+                <div id="form-wave" class="payment-form">
+                    <h3>Paiement par Wave</h3>
+                    <div class="form-group">
+                        <label for="wave-number">Numéro Wave</label>
+                        <input type="tel" id="wave-number" placeholder="70 123 45 67" maxlength="9">
+                    </div>
+                    <button class="pay-button" onclick="processPayment('wave')">Payer avec Wave</button>
+                </div>
+                
+                <!-- Formulaire Carte Bancaire -->
+                <div id="form-carte" class="payment-form">
+                    <h3>Paiement par Carte Bancaire</h3>
+                    <div class="form-group">
+                        <label for="card-number">Numéro de carte</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-expiry">Date d'expiration</label>
+                        <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-cvv">CVV</label>
+                        <input type="text" id="card-cvv" placeholder="123" maxlength="3">
+                    </div>
+                    <button class="pay-button" onclick="processPayment('carte')">Payer maintenant</button>
+                </div>
+                
+                <div class="security-badge">
+                    🔒 Paiement 100% sécurisé | Dalal © 2024
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Données des voitures
+        const voitures = [
+            {
+                id: 1,
+                titre: "Toyota Corolla 2023",
+                type: "voiture",
+                image: "AUTO1.jpg",
+                location: "Dakar Plateau, Dakar",
+                description: "Voiture familiale économique et fiable. Parfaite pour la ville et les longs trajets. Climatisation et équipements modernes.",
+                prix: 25000,
+                periode: "jour",
+                badge: "Économique",
+                marque: "Toyota",
+                modele: "Corolla",
+                annee: 2023,
+                places: 5,
+                transmission: "Automatique",
+                climatisation: true,
+                equipements: ["GPS", "Climatisation", "Radio Bluetooth", "Airbags", "Caméra de recul"]
+            },
+            {
+                id: 2,
+                titre: "Range Rover Sport",
+                type: "suv",
+                image: "AUTO2.jpg",
+                location: "Almadies, Dakar",
+                description: "SUV de luxe tout équipé. Confort exceptionnel et performances remarquables. Idéal pour les familles et les voyages.",
+                prix: 80000,
+                periode: "jour",
+                badge: "Luxe",
+                marque: "Range Rover",
+                modele: "Sport",
+                annee: 2023,
+                places: 5,
+                transmission: "Automatique",
+                climatisation: true,
+                equipements: ["GPS", "Toit panoramique", "Sièges cuir", "Système audio premium", "4x4"]
+            },
+            {
+                id: 3,
+                titre: "Yamaha MT-07",
+                type: "moto",
+                image: "AUTO3.jpg",
+                location: "Ouakam, Dakar",
+                description: "Moto sportive agile et puissante. Parfaite pour la ville et les routes sinueuses. Consommation économique.",
+                prix: 15000,
+                periode: "jour",
+                badge: "Sportive",
+                marque: "Yamaha",
+                modele: "MT-07",
+                annee: 2023,
+                places: 2,
+                transmission: "Manuelle",
+                climatisation: false,
+                equipements: ["Casque fourni", "Antivol", "Top case", "Assurance"]
+            },
+            {
+                id: 4,
+                titre: "Mercedes Classe C",
+                type: "voiture",
+                image: "AUTO4.jpg",
+                location: "Mermoz, Dakar",
+                description: "Berline premium au design élégant. Intérieur luxueux et technologies avancées. Confort et sécurité optimales.",
+                prix: 45000,
+                periode: "jour",
+                badge: "Premium",
+                marque: "Mercedes",
+                modele: "Classe C",
+                annee: 2023,
+                places: 5,
+                transmission: "Automatique",
+                climatisation: true,
+                equipements: ["GPS", "Sièges cuir", "Toit ouvrant", "Système audio premium", "Assistance conduite"]
+            },
+            {
+                id: 5,
+                titre: "Toyota Hilux 4x4",
+                type: "suv",
+                image: "AUTO5.jpg",
+                location: "Sacré-Cœur, Dakar",
+                description: "Pick-up robuste et fiable. Idéal pour les terrains difficiles et le transport de marchandises. 4x4 permanent.",
+                prix: 35000,
+                periode: "jour",
+                badge: "4x4",
+                marque: "Toyota",
+                modele: "Hilux",
+                annee: 2023,
+                places: 5,
+                transmission: "Manuelle",
+                climatisation: true,
+                equipements: ["GPS", "4x4", "Plateau", "Barres de toit", "Sièges en tissu"]
+            },
+            {
+                id: 6,
+                titre: "Renault Kangoo",
+                type: "utilitaire",
+                image: "AUTO6.jpg",
+                location: "Ngor, Dakar",
+                description: "Véhicule utilitaire spacieux et économique. Parfait pour le transport de matériel ou les déménagements.",
+                prix: 20000,
+                periode: "jour",
+                badge: "Utilitaire",
+                marque: "Renault",
+                modele: "Kangoo",
+                annee: 2023,
+                places: 2,
+                transmission: "Manuelle",
+                climatisation: true,
+                equipements: ["Grand volume", "Portes coulissantes", "Sièges basculants", "Radio"]
+            }
+        ];
+
+        // Variables globales
+        let currentVoitureId = 1;
+        let selectedPaymentMethod = null;
+
+        // Fonction pour naviguer entre les pages
+        function showPage(pageId) {
+            // Cacher toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+                page.classList.add('hidden');
+            });
+            
+            // Afficher la page demandée
+            const targetPage = document.getElementById(pageId);
+            targetPage.classList.remove('hidden');
+            targetPage.classList.add('active');
+            
+            // Scroll vers le haut
+            window.scrollTo(0, 0);
+        }
+
+        // Fonction pour charger les détails de la voiture
+        function chargerDetailsVoiture(id) {
+            currentVoitureId = id;
+            const voiture = voitures.find(v => v.id == id);
+            if (!voiture) {
+                document.getElementById('voitureDetail').innerHTML = '<div class="no-results">Voiture non trouvée</div>';
+                return;
+            }
+
+            const detailContainer = document.getElementById('voitureDetail');
+            detailContainer.innerHTML = `
+                <div class="voiture-gallery">
+                    <img id="mainImage" src="${voiture.image}" alt="${voiture.titre}" class="main-image">
+                    <div class="voiture-badge">${voiture.badge}</div>
+                    
+                    <div class="image-thumbnails">
+                        <img src="${voiture.image}" alt="Vue 1" class="thumbnail active" onclick="changeImage(this)">
+                        <img src="AUTO2.jpg" alt="Vue 2" class="thumbnail" onclick="changeImage(this)">
+                        <img src="AUTO3.jpg" alt="Vue 3" class="thumbnail" onclick="changeImage(this)">
+                        <img src="AUTO4.jpg" alt="Vue 4" class="thumbnail" onclick="changeImage(this)">
+                    </div>
+                </div>
+                
+                <div class="voiture-info">
+                    <div class="voiture-header">
+                        <h1 class="voiture-title">${voiture.titre}</h1>
+                        
+                        <div class="voiture-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${voiture.location}</span>
+                        </div>
+                        
+                        <div class="voiture-price">
+                            ${voiture.prix.toLocaleString()} FCFA <span>/ ${voiture.periode}</span>
+                        </div>
+                        
+                        <!-- BOUTON RÉSERVER qui navigue vers la page 2 -->
+                        <button class="reserve-btn-top" onclick="goToPayment()">
+                            <i class="fas fa-calendar-check"></i>
+                            Réserver Maintenant
+                        </button>
+                    </div>
+                    
+                    <p class="voiture-description">
+                        ${voiture.description}
+                    </p>
+                    
+                    <div class="voiture-features">
+                        <div class="feature">
+                            <i class="fas fa-car"></i>
+                            <span>${voiture.marque} ${voiture.modele}</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Année: ${voiture.annee}</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-users"></i>
+                            <span>${voiture.places} places</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-cog"></i>
+                            <span>Transmission: ${voiture.transmission}</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-snowflake"></i>
+                            <span>Climatisation: ${voiture.climatisation ? 'Oui' : 'Non'}</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-gas-pump"></i>
+                            <span>Type: ${voiture.type}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="equipements">
+                        <h3>Équipements inclus</h3>
+                        <div class="equipements-list">
+                            ${voiture.equipements.map(equip => `<span class="equipement-tag">${equip}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fonction pour afficher les voitures similaires
+        function afficherVoituresSimilaires(voitureActuelleId) {
+            const voitureActuelle = voitures.find(v => v.id == voitureActuelleId);
+            if (!voitureActuelle) return;
+
+            const voituresSimilaires = voitures.filter(voiture => 
+                voiture.id != voitureActuelleId && voiture.type === voitureActuelle.type
+            ).slice(0, 4);
+
+            const container = document.getElementById('similarVoitures');
+            
+            if (voituresSimilaires.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1 / -1;">Aucune voiture similaire trouvée</p>';
+                return;
+            }
+
+            container.innerHTML = voituresSimilaires.map(voiture => `
+                <div class="similar-card">
+                    <div style="position: relative;">
+                        <img src="${voiture.image}" alt="${voiture.titre}" class="similar-image">
+                        ${voiture.badge ? `<div class="similar-badge">${voiture.badge}</div>` : ''}
+                    </div>
+                    <div class="similar-content">
+                        <h3 class="similar-title">${voiture.titre}</h3>
+                        <div class="similar-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${voiture.location}</span>
+                        </div>
+                        <div class="similar-features">
+                            <div class="similar-feature">
+                                <i class="fas fa-car"></i>
+                                <span>${voiture.type}</span>
+                            </div>
+                            <div class="similar-feature">
+                                <i class="fas fa-users"></i>
+                                <span>${voiture.places} places</span>
+                            </div>
+                            <div class="similar-feature">
+                                <i class="fas fa-cog"></i>
+                                <span>${voiture.transmission}</span>
+                            </div>
+                        </div>
+                        <div class="similar-price">
+                            ${voiture.prix.toLocaleString()} FCFA
+                            <span>/ ${voiture.periode}</span>
+                        </div>
+                        <button class="voir-btn" onclick="chargerDetailsVoiture(${voiture.id}); showPage('page1');">
+                            <i class="fas fa-eye"></i>
+                            Voir
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fonction pour aller vers la page de paiement
+        function goToPayment() {
+            const voiture = voitures.find(v => v.id == currentVoitureId);
+            if (voiture) {
+                // Mettre à jour le récapitulatif de paiement
+                document.getElementById('reservation-voiture').textContent = voiture.titre;
+                document.getElementById('reservation-prix').textContent = voiture.prix.toLocaleString() + ' FCFA';
+                
+                // Afficher la page de paiement
+                showPage('page2');
+            }
+        }
+
+        // Fonction pour changer l'image principale
+        function changeImage(thumbnail) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = thumbnail.src;
+            
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            thumbnail.classList.add('active');
+        }
+
+        // Fonction pour traiter le paiement
+        function processPayment(method) {
+            const voiture = voitures.find(v => v.id == currentVoitureId);
+            if (!voiture) return;
+
+            alert(`Paiement ${method} confirmé pour :\n${voiture.titre}\n${voiture.prix.toLocaleString()} FCFA\n\nVotre réservation a été effectuée avec succès !`);
+            
+            // Retour à la page des détails après 2 secondes
+            setTimeout(() => {
+                showPage('page1');
+            }, 2000);
+        }
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const voitureId = urlParams.get('id') || 1;
+            
+            chargerDetailsVoiture(voitureId);
+            afficherVoituresSimilaires(voitureId);
+
+            // Configuration des méthodes de paiement
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const paymentForms = document.querySelectorAll('.payment-form');
+            
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Retirer la sélection précédente
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    // Cacher tous les formulaires
+                    paymentForms.forEach(form => form.style.display = 'none');
+                    
+                    // Ajouter la sélection
+                    this.classList.add('selected');
+                    
+                    // Afficher le formulaire correspondant
+                    const method = this.getAttribute('data-method');
+                    selectedPaymentMethod = method;
+                    const formToShow = document.getElementById(`form-${method}`);
+                    if (formToShow) {
+                        formToShow.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Formatage du numéro de carte
+            document.getElementById('card-number')?.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let formattedValue = value.match(/.{1,4}/g)?.join(' ');
+                if (formattedValue) {
+                    e.target.value = formattedValue;
+                }
+            });
+            
+            // Formatage de la date d'expiration
+            document.getElementById('card-expiry')?.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\//g, '').replace(/[^0-9]/gi, '');
+                if (value.length >= 2) {
+                    e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

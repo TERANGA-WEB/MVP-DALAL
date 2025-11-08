@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos - Dalal Sénégal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E5E4E;
+            --secondary: #E1C85C;
+            --white: #FFFFFF;
+            --light-bg: #f5f7fa;
+            --gray: #e1e8ed;
+            --dark-gray: #333333;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1001;
+        }
+
+        .logo img {
+            height: clamp(40px, 8vw, 50px);
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        /* Navigation Desktop */
+        .desktop-nav {
+            display: flex;
+            gap: clamp(20px, 3vw, 35px);
+        }
+
+        .desktop-nav a {
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            color: var(--primary);
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            padding: 8px 0;
+        }
+
+        .desktop-nav a:hover {
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #f4d03f 100%);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .desktop-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Menu Burger */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(46, 94, 78, 0.1);
+            transform: scale(1.1);
+        }
+
+        /* Navigation Mobile */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20% 10%;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(25px, 6vw, 40px);
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mobile-nav a {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            font-weight: 600;
+            color: var(--primary);
+            padding: 12px 0;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            display: block;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+            transform: translateX(10px);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .close-menu:hover {
+            background-color: rgba(46, 94, 78, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Hero Section À Propos */
+        .hero-about {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            min-height: 500px;
+            margin-top: clamp(70px, 12vw, 90px);
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary) 0%, #1e4a3a 100%);
+        }
+
+        .hero-about-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 5%;
+        }
+
+        .hero-about-text {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-about-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-about-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* Section Histoire */
+        .histoire-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .histoire-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .histoire-text h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .histoire-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .histoire-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .histoire-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .histoire-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Section Valeurs */
+        .valeurs-section {
+            padding: 100px 0;
+            background: var(--light-bg);
+        }
+
+        .valeurs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .valeur-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--secondary);
+        }
+
+        .valeur-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(46, 94, 78, 0.15);
+        }
+
+        .valeur-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .valeur-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .valeur-card p {
+            color: var(--dark-gray);
+            line-height: 1.7;
+        }
+
+        /* Section Chiffres */
+        .chiffres-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #1e4a3a 100%);
+            color: var(--white);
+        }
+
+        .chiffres-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .chiffre-item {
+            padding: 30px 20px;
+        }
+
+        .chiffre-nombre {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .chiffre-text {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Section Équipe */
+        .equipe-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .equipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .membre-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .membre-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .membre-image {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .membre-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .membre-card:hover .membre-image img {
+            transform: scale(1.1);
+        }
+
+        .membre-info {
+            padding: 30px 20px;
+        }
+
+        .membre-info h3 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .membre-info .role {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .membre-info p {
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        /* Section Engagement */
+        .engagement-section {
+            padding: 100px 0;
+            background: var(--light-bg);
+        }
+
+        .engagement-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .engagement-content h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .engagement-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            margin-bottom: 3rem;
+        }
+
+        .engagement-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .engagement-feature {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .engagement-feature h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .engagement-feature p {
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            header {
+                padding: 0 4%;
+            }
+            
+            .desktop-nav {
+                gap: 15px;
+            }
+
+            .histoire-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .histoire-text {
+                order: 2;
+            }
+
+            .histoire-image {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .header-container {
+                padding: 12px 0;
+            }
+            
+            .hero-about {
+                margin-top: 70px;
+                height: 50vh;
+                min-height: 400px;
+            }
+
+            .valeurs-grid,
+            .equipe-grid,
+            .engagement-features {
+                grid-template-columns: 1fr;
+            }
+
+            .chiffres-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0 3%;
+            }
+            
+            .logo {
+                gap: 8px;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .hero-about {
+                margin-top: 65px;
+                height: 45vh;
+                min-height: 350px;
+            }
+
+            .chiffres-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chiffre-nombre {
+                font-size: 2.5rem;
+            }
+
+            .membre-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+ <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="logodalal.jpg" alt="Logo Dalal Sénégal">
+                <div class="logo-text">Dalal</div>
+            </div>
+            
+            <!-- Navigation Desktop -->
+            <nav class="desktop-nav">
+                <a href="logement.html">Logement</a>
+                <a href="transport.html">Transport</a>
+                <a href="decouverte.html">Découverte</a>
+                <a href="creecompte.html">s'inscrire</a> 
+                  <a href="/plus.html">Plus</a>
+            </nav>
+            
+            <!-- Menu Burger -->
+            <button class="menu-toggle" aria-label="Ouvrir le menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Navigation Mobile -->
+            <nav class="mobile-nav">
+                <button class="close-menu" aria-label="Fermer le menu">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul>
+                    <li><a href="logement.html">Logement</a></li>
+                    <li><a href="transport.html">Transport</a></li>
+                    <li><a href="decouverte.html">Découverte</a></li>
+                    <li><a href="/creecompte.html">s'inscrire</a></li>
+                    <li><a href="plus.html">Plus</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section À Propos -->
+    <section class="hero-about">
+        <div class="hero-about-content">
+            <div class="hero-about-text">
+                <h1 class="hero-about-title">Notre Histoire</h1>
+                <p class="hero-about-subtitle">Découvrez la passion qui anime Dalal Sénégal</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Histoire -->
+    <section class="histoire-section">
+        <div class="container">
+            <div class="histoire-content">
+                <div class="histoire-text">
+                    <h2>Bienvenue chez Dalal Sénégal</h2>
+                    <p>
+                        Fondée en 2020, Dalal Sénégal est née d'une passion profonde pour notre pays et d'une volonté 
+                        de partager ses trésors cachés avec le monde. Le mot "Dalal" en wolof signifie "guider" ou "montrer le chemin", 
+                        une mission que nous incarnons dans chacun de nos services.
+                    </p>
+                    <p>
+                        Notre plateforme connecte les voyageurs avec les meilleures expériences sénégalaises : 
+                        restaurants authentiques, hébergements de charme, guides locaux passionnés et activités culturelles uniques.
+                    </p>
+                    <p>
+                        Aujourd'hui, Dalal Sénégal est fière d'être la référence pour les voyageurs souhaitant 
+                        découvrir la vraie essence du Sénégal, au-delà des sentiers battus, en soutenant l'économie locale 
+                        et en promouvant un tourisme responsable.
+                    </p>
+                </div>
+                <div class="histoire-image">
+                    <img src="EQUUPE.jpg  " alt="Équipe Dalal Sénégal">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Valeurs -->
+    <section class="valeurs-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Valeurs</h2>
+                <p>Les principes qui guident chacune de nos actions</p>
+            </div>
+
+            <div class="valeurs-grid">
+                <div class="valeur-card">
+                    <div class="valeur-icon">
+                        <i class="fas fa-compass"></i>
+                    </div>
+                    <h3>Guidage Authentique</h3>
+                    <p>
+                        Comme notre nom l'indique, "Dalal" signifie guider. Nous vous montrons le chemin 
+                        vers les expériences les plus authentiques que le Sénégal a à offrir.
+                    </p>
+                </div>
+
+                <div class="valeur-card">
+                    <div class="valeur-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Hospitalité Sénégalaise</h3>
+                    <p>
+                        La Teranga est au cœur de notre approche. Nous accueillons chaque voyageur 
+                        comme un membre de notre famille et veillons à son bien-être tout au long de son séjour.
+                    </p>
+                </div>
+
+                <div class="valeur-card">
+                    <div class="valeur-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Développement Local</h3>
+                    <p>
+                        Nous nous engageons à promouvoir un tourisme qui profite aux communautés locales 
+                        et préserve notre environnement pour les générations futures.
+                    </p>
+                </div>
+
+                <div class="valeur-card">
+                    <div class="valeur-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3>Excellence</h3>
+                    <p>
+                        De la sélection de nos partenaires à l'accompagnement de nos voyageurs, 
+                        nous visons l'excellence dans chaque détail pour vous offrir une expérience inoubliable.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Chiffres -->
+    <section class="chiffres-section">
+        <div class="container">
+            <div class="chiffres-grid">
+                <div class="chiffre-item">
+                    <div class="chiffre-nombre">4+</div>
+                    <div class="chiffre-text">Années d'expérience</div>
+                </div>
+                <div class="chiffre-item">
+                    <div class="chiffre-nombre">3000+</div>
+                    <div class="chiffre-text">Voyageurs satisfaits</div>
+                </div>
+                <div class="chiffre-item">
+                    <div class="chiffre-nombre">150+</div>
+                    <div class="chiffre-text">Partenaires locaux</div>
+                </div>
+                <div class="chiffre-item">
+                    <div class="chiffre-nombre">12</div>
+                    <div class="chiffre-text">Régions couvertes</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Équipe -->
+    <section class="equipe-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Notre Équipe</h2>
+                <p>Des passionnés du Sénégal à votre service</p>
+            </div>
+
+            <div class="equipe-grid">
+                <div class="membre-card">
+                    <div class="membre-image">
+                        <img src="HOMME1.jpg" alt="Mamadou Diallo - Fondateur">
+                    </div>
+                    <div class="membre-info">
+                        <h3>Mamadou Diallo</h3>
+                        <div class="role">Fondateur & Directeur</div>
+                        <p>
+                            Passionné par le tourisme responsable, Mamadou a créé Dalal Sénégal 
+                            pour partager son amour du pays et guider les voyageurs vers des expériences authentiques.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="membre-card">
+                    <div class="membre-image">
+                        <img src="FEMME2.jpg" alt="Aminata Ndiaye - Responsable Expériences">
+                    </div>
+                    <div class="membre-info">
+                        <h3>Aminata Ndiaye</h3>
+                        <div class="role">Responsable Expériences</div>
+                        <p>
+                            Aminata conçoit des expériences uniques qui permettent aux voyageurs 
+                            de vivre la vraie culture sénégalaise et de créer des souvenirs mémorables.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="membre-card">
+                    <div class="membre-image">
+                        <img src="HOMME2.jpg" alt="Ibrahima Sarr - Guide Expert">
+                    </div>
+                    <div class="membre-info">
+                        <h3>Ibrahima Sarr</h3>
+                        <div class="role">Guide Expert</div>
+                        <p>
+                            Avec 8 ans d'expérience, Ibrahima connaît chaque recoin du Sénégal 
+                            et partage ses connaissances avec passion lors des visites guidées.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="membre-card">
+                    <div class="membre-image">
+                        <img src="FEMME2.jpg" alt="Fatou Bâ - Relations Clients">
+                    </div>
+                    <div class="membre-info">
+                        <h3>Fatou Bâ</h3>
+                        <div class="role">Chef Relations Clients</div>
+                        <p>
+                            Fatou veille à ce que chaque voyageur se sente accompagné et 
+                            reparte avec des souvenirs inoubliables de son séjour au Sénégal.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Engagement -->
+    <section class="engagement-section">
+        <div class="container">
+            <div class="engagement-content">
+                <h2>Notre Engagement</h2>
+                <p class="engagement-text">
+                    Chez Dalal Sénégal, nous croyons en un tourisme qui profite à tous : 
+                    aux voyageurs en quête d'authenticité, aux communautés locales qui préservent 
+                    leurs traditions, et à notre environnement que nous nous efforçons de protéger.
+                </p>
+
+                <div class="engagement-features">
+                    <div class="engagement-feature">
+                        <h3>🔄 Tourisme Responsable</h3>
+                        <p>
+                            Nous reversons 5% de nos bénéfices à des projets communautaires 
+                            et favorisons l'économie locale en travaillant avec des partenaires locaux.
+                        </p>
+                    </div>
+
+                    <div class="engagement-feature">
+                        <h3>🌱 Éco-responsabilité</h3>
+                        <p>
+                            Nous promouvons des pratiques respectueuses de l'environnement et 
+                            soutenons les initiatives de préservation de la biodiversité sénégalaise.
+                        </p>
+                    </div>
+
+                    <div class="engagement-feature">
+                        <h3>🤝 Partenariats Éthiques</h3>
+                        <p>
+                            Nous travaillons exclusivement avec des partenaires qui partagent 
+                            nos valeurs et respectent des conditions de travail dignes et équitables.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dalal Sénégal</h3>
+                    <p>Votre guide pour découvrir les richesses culturelles et naturelles du Sénégal.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="restaurants.html">Restaurants</a></li>
+                        <li><a href="lieux.html">Lieux Incontournables</a></li>
+                        <li><a href="culture.html">Culture & Tradition</a></li>
+                        <li><a href="conseils.html">Conseils Pratiques</a></li>
+                        <li><a href="apropos.html">À Propos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@dalal-senegal.com</li>
+                        <li><i class="fas fa-phone"></i> +221 33 123 45 67</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
+                        <li><i class="fas fa-clock"></i> Lun - Ven: 8h - 18h</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Dalal Sénégal. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu burger mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const closeMenu = document.querySelector('.close-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav a');
+
+        // Ouvrir le menu mobile
+        menuToggle.addEventListener('click', function() {
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Fermer le menu mobile
+        closeMenu.addEventListener('click', function() {
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Fermer le menu en cliquant sur un lien
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Fermer le menu en appuyant sur Echap
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Animation du header au scroll
+        let lastScrollY = window.scrollY;
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'var(--white)';
+                header.style.backdropFilter = 'none';
+            }
+
+            lastScrollY = window.scrollY;
+        });
+
+        // Animation des cartes au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Appliquer l'animation aux éléments
+        document.querySelectorAll('.valeur-card, .membre-card, .engagement-feature').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

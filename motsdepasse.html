@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe oublié - Dalal Sénégal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #2E5E4E;
+            --primary-light: #3A7562;
+            --secondary: #E1C85C;
+            --secondary-light: #F0D87C;
+            --white: #FFFFFF;
+            --light-bg: #f8fafc;
+            --gray: #e2e8f0;
+            --gray-dark: #64748b;
+            --dark: #1e293b;
+            --error: #ef4444;
+            --error-light: #fef2f2;
+            --success: #10b981;
+            --success-light: #ecfdf5;
+            --warning: #f59e0b;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--light-bg) 0%, #e2e8f0 100%);
+            color: var(--dark);
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+            transition: all 0.3s ease;
+        }
+
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 1001;
+        }
+
+        .logo-img {
+            height: clamp(42px, 8vw, 52px);
+            width: auto;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .logo:hover .logo-img {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .logo-text {
+          
+            font-size: clamp(1.4rem, 4vw, 1.9rem);
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        /* Navigation */
+        .desktop-nav {
+            display: flex;
+            gap: clamp(22px, 3vw, 38px);
+        }
+
+        .desktop-nav a {
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            color: var(--dark);
+            font-size: clamp(0.92rem, 1.5vw, 1.02rem);
+            padding: 10px 0;
+        }
+
+        .desktop-nav a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .desktop-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Menu Burger */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            color: var(--primary);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(46, 94, 78, 0.08);
+            transform: scale(1.1);
+        }
+
+        /* Navigation Mobile */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-bg) 100%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20% 10%;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(28px, 6vw, 44px);
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mobile-nav a {
+            font-size: clamp(1.4rem, 5vw, 1.9rem);
+            font-weight: 600;
+            color: var(--dark);
+            padding: 14px 0;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            display: block;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            transform: translateX(12px);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+            background: none;
+            border: none;
+            font-size: 2.2rem;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .close-menu:hover {
+            background-color: rgba(46, 94, 78, 0.08);
+            transform: rotate(90deg);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-top: clamp(110px, 15vw, 150px);
+            padding: 50px 0;
+        }
+
+        /* Password Reset Section */
+        .password-reset-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 65vh;
+            padding: 50px 0;
+        }
+
+        .password-reset-container {
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            padding: 60px;
+            width: 100%;
+            max-width: 520px;
+            text-align: center;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .password-reset-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient);
+        }
+
+        .password-reset-icon {
+            font-size: 4.5rem;
+            margin-bottom: 25px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .password-reset-title {
+            font-size: 2.4rem;
+            color: var(--dark);
+            margin-bottom: 18px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .password-reset-subtitle {
+            font-size: 1.15rem;
+            color: var(--gray-dark);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 18px 20px;
+            border: 2px solid var(--gray);
+            border-radius: 14px;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(46, 94, 78, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .form-control.error {
+            border-color: var(--error);
+            background-color: var(--error-light);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.92rem;
+            margin-top: 8px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: var(--gradient);
+            color: var(--white);
+            padding: 18px 32px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 6px 20px rgba(46, 94, 78, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(46, 94, 78, 0.4);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn:disabled::before {
+            display: none;
+        }
+
+        .login-link {
+            margin-top: 28px;
+            color: var(--gray-dark);
+            font-size: 1rem;
+        }
+
+        .login-link a {
+            color: var(--primary);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .login-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .login-link a:hover::after {
+            width: 100%;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: var(--success-light);
+            color: var(--success);
+            padding: 24px;
+            border-radius: 14px;
+            margin-bottom: 28px;
+            display: none;
+            text-align: left;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-message i {
+            font-size: 1.6rem;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        /* Steps Indicator */
+        .steps-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 45px;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .steps-indicator::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: 60px;
+            right: 60px;
+            height: 4px;
+            background: var(--gray);
+            z-index: 1;
+            border-radius: 2px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            max-width: 120px;
+        }
+
+        .step-number {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--gray);
+            color: var(--gray-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .step.active .step-number {
+            background: var(--gradient);
+            border-color: transparent;
+            color: var(--white);
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(46, 94, 78, 0.3);
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+            border-color: transparent;
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .step-text {
+            font-size: 0.92rem;
+            color: var(--gray-dark);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .step.active .step-text {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Code Input */
+        .code-input-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .code-input {
+            width: 52px;
+            height: 64px;
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            background: var(--white);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 94, 78, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 12px;
+        }
+
+        .strength-bar {
+            height: 8px;
+            background: var(--gray);
+            border-radius: 4px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: all 0.4s ease;
+        }
+
+        .strength-text {
+            font-size: 0.85rem;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        /* Password Requirements */
+        .password-requirements {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .password-requirements h4 {
+            margin-bottom: 12px;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--gray-dark);
+        }
+
+        .requirement i {
+            margin-right: 10px;
+            font-size: 0.8rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .requirement.met {
+            color: var(--success);
+        }
+
+        .requirement.unmet {
+            color: var(--gray-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 50px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 45px;
+            margin-bottom: 45px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 22px;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .footer-column p, .footer-column li {
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-column ul li i {
+            margin-right: 12px;
+            color: var(--secondary);
+            width: 18px;
+        }
+
+        .footer-column a {
+            color: #cbd5e1;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .social-links a {
+            width: 44px;
+            height: 44px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            header {
+                padding: 0 4%;
+            }
+            
+            .desktop-nav {
+                gap: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .header-container {
+                padding: 15px 0;
+            }
+            
+            .main-content {
+                margin-top: 90px;
+            }
+
+            .password-reset-container {
+                padding: 45px 35px;
+                margin: 0 20px;
+            }
+
+            .password-reset-title {
+                font-size: 2rem;
+            }
+
+            .steps-indicator {
+                margin-bottom: 35px;
+            }
+
+            .step-text {
+                font-size: 0.85rem;
+            }
+
+            .steps-indicator::before {
+                left: 50px;
+                right: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0 3%;
+            }
+            
+            .logo {
+                gap: 10px;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            .password-reset-container {
+                padding: 35px 25px;
+            }
+
+            .code-input-container {
+                gap: 10px;
+            }
+
+            .code-input {
+                width: 46px;
+                height: 58px;
+                font-size: 1.4rem;
+            }
+
+            .steps-indicator::before {
+                left: 40px;
+                right: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="logo">
+                <img src="/image/logodalal.jpg" alt="Logo Dalal Sénégal" class="logo-img">
+                <div class="logo-text">Dalal Sénégal</div>
+            </div>
+            
+            <!-- Navigation Desktop -->
+            <nav class="desktop-nav">
+                <a href="index.html">Accueil</a>
+                <a href="conseils.html">Conseils Pratiques</a>
+                <a href="apropos.html">À Propos</a>
+                <a href="connexion.html">Connexion</a>
+            </nav>
+            
+            <!-- Menu Burger -->
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Navigation Mobile -->
+            <nav class="mobile-nav">
+                <button class="close-menu">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="restaurants.html">Restaurants</a></li>
+                    <li><a href="lieux.html">Lieux Incontournables</a></li>
+                    <li><a href="culture.html">Culture & Tradition</a></li>
+                    <li><a href="conseils.html">Conseils Pratiques</a></li>
+                    <li><a href="apropos.html">À Propos</a></li>
+                    <li><a href="connexion.html">Connexion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="password-reset-section">
+            <div class="container">
+                <div class="password-reset-container">
+                    <!-- Step 1: Email Input -->
+                    <div class="password-reset-step" id="step1">
+                        <div class="password-reset-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h1 class="password-reset-title">Mot de passe oublié</h1>
+                        <p class="password-reset-subtitle">
+                            Entrez votre adresse email associée à votre compte. Nous vous enverrons un code de vérification pour réinitialiser votre mot de passe.
+                        </p>
+
+                        <!-- Steps Indicator -->
+                        <div class="steps-indicator">
+                            <div class="step active">
+                                <div class="step-number">1</div>
+                                <div class="step-text">Email</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-text">Code</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-text">Nouveau mot de passe</div>
+                            </div>
+                        </div>
+
+                        <form id="emailForm">
+                            <div class="form-group">
+                                <label for="email">Adresse email</label>
+                                <input type="email" id="email" class="form-control" placeholder="votre@email.com" required>
+                                <div class="error-message" id="emailError">Veuillez entrer une adresse email valide</div>
+                            </div>
+                            <button type="submit" class="btn" id="sendCodeBtn">
+                                <span class="btn-text">Envoyer le code</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Envoi en cours...
+                                </span>
+                            </button>
+                        </form>
+
+                        <div class="login-link">
+                            <p>Vous vous souvenez de votre mot de passe ? <a href="connexion.html">Se connecter</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Code Verification -->
+                    <div class="password-reset-step" id="step2" style="display: none;">
+                        <div class="password-reset-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h1 class="password-reset-title">Vérification</h1>
+                        <p class="password-reset-subtitle">
+                            Nous avons envoyé un code à 6 chiffres à votre adresse email. Entrez-le ci-dessous pour vérifier votre identité.
+                        </p>
+
+                        <!-- Steps Indicator -->
+                        <div class="steps-indicator">
+                            <div class="step completed">
+                                <div class="step-number"><i class="fas fa-check"></i></div>
+                                <div class="step-text">Email</div>
+                            </div>
+                            <div class="step active">
+                                <div class="step-number">2</div>
+                                <div class="step-text">Code</div>
+                            </div>
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-text">Nouveau mot de passe</div>
+                            </div>
+                        </div>
+
+                        <form id="codeForm">
+                            <div class="form-group">
+                                <label for="verificationCode">Code de vérification</label>
+                                <div class="code-input-container">
+                                    <input type="text" maxlength="1" class="code-input" data-index="1" required>
+                                    <input type="text" maxlength="1" class="code-input" data-index="2" required>
+                                    <input type="text" maxlength="1" class="code-input" data-index="3" required>
+                                    <input type="text" maxlength="1" class="code-input" data-index="4" required>
+                                    <input type="text" maxlength="1" class="code-input" data-index="5" required>
+                                    <input type="text" maxlength="1" class="code-input" data-index="6" required>
+                                </div>
+                                <div class="error-message" id="codeError">Code incorrect. Veuillez réessayer.</div>
+                            </div>
+                            <button type="submit" class="btn" id="verifyCodeBtn">
+                                <span class="btn-text">Vérifier le code</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Vérification...
+                                </span>
+                            </button>
+                        </form>
+
+                        <div class="login-link">
+                            <p>Vous n'avez pas reçu le code ? <a href="#" id="resendCode">Renvoyer le code</a></p>
+                            <p><a href="#" id="backToEmail1">← Retour à l'étape précédente</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: New Password -->
+                    <div class="password-reset-step" id="step3" style="display: none;">
+                        <div class="password-reset-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h1 class="password-reset-title">Nouveau mot de passe</h1>
+                        <p class="password-reset-subtitle">
+                            Créez un nouveau mot de passe sécurisé pour votre compte.
+                        </p>
+
+                        <!-- Steps Indicator -->
+                        <div class="steps-indicator">
+                            <div class="step completed">
+                                <div class="step-number"><i class="fas fa-check"></i></div>
+                                <div class="step-text">Email</div>
+                            </div>
+                            <div class="step completed">
+                                <div class="step-number"><i class="fas fa-check"></i></div>
+                                <div class="step-text">Code</div>
+                            </div>
+                            <div class="step active">
+                                <div class="step-number">3</div>
+                                <div class="step-text">Nouveau mot de passe</div>
+                            </div>
+                        </div>
+
+                        <form id="passwordForm">
+                            <div class="form-group">
+                                <label for="newPassword">Nouveau mot de passe</label>
+                                <input type="password" id="newPassword" class="form-control" placeholder="Entrez votre nouveau mot de passe" required>
+                                <div class="password-strength">
+                                    <div class="strength-bar">
+                                        <div class="strength-fill" id="strengthFill"></div>
+                                    </div>
+                                    <div class="strength-text" id="strengthText">Faible</div>
+                                </div>
+                                
+                                <div class="password-requirements">
+                                    <h4>Exigences de sécurité :</h4>
+                                    <div class="requirement unmet" id="req-length">
+                                        <i class="fas fa-circle"></i>
+                                        Au moins 8 caractères
+                                    </div>
+                                    <div class="requirement unmet" id="req-uppercase">
+                                        <i class="fas fa-circle"></i>
+                                        Une lettre majuscule
+                                    </div>
+                                    <div class="requirement unmet" id="req-lowercase">
+                                        <i class="fas fa-circle"></i>
+                                        Une lettre minuscule
+                                    </div>
+                                    <div class="requirement unmet" id="req-number">
+                                        <i class="fas fa-circle"></i>
+                                        Un chiffre
+                                    </div>
+                                    <div class="requirement unmet" id="req-special">
+                                        <i class="fas fa-circle"></i>
+                                        Un caractère spécial
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirmer le mot de passe</label>
+                                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirmez votre nouveau mot de passe" required>
+                                <div class="error-message" id="passwordError">Les mots de passe ne correspondent pas</div>
+                            </div>
+                            <button type="submit" class="btn" id="resetPasswordBtn">
+                                <span class="btn-text">Réinitialiser le mot de passe</span>
+                                <span class="btn-loading" style="display: none;">
+                                    <i class="fas fa-spinner fa-spin"></i> Réinitialisation...
+                                </span>
+                            </button>
+                        </form>
+
+                        <div class="login-link">
+                            <p><a href="#" id="backToEmail2">← Retour à l'étape précédente</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div class="success-message" id="successMessage" style="display: none;">
+                        <i class="fas fa-check-circle"></i>
+                        Votre mot de passe a été réinitialisé avec succès ! Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.
+                    </div>
+
+                    <div class="login-link" id="successLoginLink" style="display: none;">
+                        <p><a href="connexion.html">Se connecter</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dalal Sénégal</h3>
+                    <p>Votre guide pour découvrir les richesses culturelles et naturelles du Sénégal.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="restaurants.html">Restaurants</a></li>
+                        <li><a href="lieux.html">Lieux Incontournables</a></li>
+                        <li><a href="culture.html">Culture & Tradition</a></li>
+                        <li><a href="conseils.html">Conseils Pratiques</a></li>
+                        <li><a href="apropos.html">À Propos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@dalal-senegal.com</li>
+                        <li><i class="fas fa-phone"></i> +221 33 123 45 67</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
+                        <li><i class="fas fa-clock"></i> Lun - Ven: 8h - 18h</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Dalal Sénégal. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu burger mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const closeMenu = document.querySelector('.close-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav a');
+        const mainHeader = document.getElementById('mainHeader');
+
+        // Ouvrir le menu mobile
+        menuToggle.addEventListener('click', function() {
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Fermer le menu mobile
+        closeMenu.addEventListener('click', function() {
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Fermer le menu en cliquant sur un lien
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Fermer le menu en appuyant sur Echap
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Animation du header au scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                mainHeader.classList.add('header-scrolled');
+            } else {
+                mainHeader.classList.remove('header-scrolled');
+            }
+        });
+
+        // Password Reset Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+            const successMessage = document.getElementById('successMessage');
+            const successLoginLink = document.getElementById('successLoginLink');
+            
+            const emailForm = document.getElementById('emailForm');
+            const codeForm = document.getElementById('codeForm');
+            const passwordForm = document.getElementById('passwordForm');
+            
+            const emailInput = document.getElementById('email');
+            const codeInputs = document.querySelectorAll('.code-input');
+            const newPasswordInput = document.getElementById('newPassword');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            
+            const emailError = document.getElementById('emailError');
+            const codeError = document.getElementById('codeError');
+            const passwordError = document.getElementById('passwordError');
+            
+            const sendCodeBtn = document.getElementById('sendCodeBtn');
+            const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+            const resetPasswordBtn = document.getElementById('resetPasswordBtn');
+            
+            const backToEmail1 = document.getElementById('backToEmail1');
+            const backToEmail2 = document.getElementById('backToEmail2');
+            const resendCode = document.getElementById('resendCode');
+            
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+
+            // Password requirements
+            const reqLength = document.getElementById('req-length');
+            const reqUppercase = document.getElementById('req-uppercase');
+            const reqLowercase = document.getElementById('req-lowercase');
+            const reqNumber = document.getElementById('req-number');
+            const reqSpecial = document.getElementById('req-special');
+
+            // Email validation
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Password strength checker
+            function checkPasswordStrength(password) {
+                let strength = 0;
+                const requirements = {
+                    length: password.length >= 8,
+                    uppercase: /[A-Z]/.test(password),
+                    lowercase: /[a-z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[^A-Za-z0-9]/.test(password)
+                };
+
+                // Update requirements UI
+                updateRequirements(requirements);
+
+                // Calculate strength
+                if (requirements.length) strength += 20;
+                if (requirements.uppercase) strength += 20;
+                if (requirements.lowercase) strength += 20;
+                if (requirements.number) strength += 20;
+                if (requirements.special) strength += 20;
+
+                // Update strength bar
+                strengthFill.style.width = strength + '%';
+                
+                if (strength <= 20) {
+                    strengthFill.style.background = '#ef4444';
+                    strengthText.textContent = 'Très faible';
+                } else if (strength <= 40) {
+                    strengthFill.style.background = '#f59e0b';
+                    strengthText.textContent = 'Faible';
+                } else if (strength <= 60) {
+                    strengthFill.style.background = '#eab308';
+                    strengthText.textContent = 'Moyen';
+                } else if (strength <= 80) {
+                    strengthFill.style.background = '#84cc16';
+                    strengthText.textContent = 'Bon';
+                } else {
+                    strengthFill.style.background = '#10b981';
+                    strengthText.textContent = 'Très fort';
+                }
+
+                return requirements;
+            }
+
+            function updateRequirements(requirements) {
+                // Length
+                if (requirements.length) {
+                    reqLength.classList.remove('unmet');
+                    reqLength.classList.add('met');
+                    reqLength.querySelector('i').className = 'fas fa-check-circle';
+                } else {
+                    reqLength.classList.remove('met');
+                    reqLength.classList.add('unmet');
+                    reqLength.querySelector('i').className = 'fas fa-circle';
+                }
+
+                // Uppercase
+                if (requirements.uppercase) {
+                    reqUppercase.classList.remove('unmet');
+                    reqUppercase.classList.add('met');
+                    reqUppercase.querySelector('i').className = 'fas fa-check-circle';
+                } else {
+                    reqUppercase.classList.remove('met');
+                    reqUppercase.classList.add('unmet');
+                    reqUppercase.querySelector('i').className = 'fas fa-circle';
+                }
+
+                // Lowercase
+                if (requirements.lowercase) {
+                    reqLowercase.classList.remove('unmet');
+                    reqLowercase.classList.add('met');
+                    reqLowercase.querySelector('i').className = 'fas fa-check-circle';
+                } else {
+                    reqLowercase.classList.remove('met');
+                    reqLowercase.classList.add('unmet');
+                    reqLowercase.querySelector('i').className = 'fas fa-circle';
+                }
+
+                // Number
+                if (requirements.number) {
+                    reqNumber.classList.remove('unmet');
+                    reqNumber.classList.add('met');
+                    reqNumber.querySelector('i').className = 'fas fa-check-circle';
+                } else {
+                    reqNumber.classList.remove('met');
+                    reqNumber.classList.add('unmet');
+                    reqNumber.querySelector('i').className = 'fas fa-circle';
+                }
+
+                // Special character
+                if (requirements.special) {
+                    reqSpecial.classList.remove('unmet');
+                    reqSpecial.classList.add('met');
+                    reqSpecial.querySelector('i').className = 'fas fa-check-circle';
+                } else {
+                    reqSpecial.classList.remove('met');
+                    reqSpecial.classList.add('unmet');
+                    reqSpecial.querySelector('i').className = 'fas fa-circle';
+                }
+            }
+
+            // Check if all requirements are met
+            function areAllRequirementsMet(requirements) {
+                return Object.values(requirements).every(req => req === true);
+            }
+
+            // Code input navigation
+            codeInputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1) {
+                        if (index < codeInputs.length - 1) {
+                            codeInputs[index + 1].focus();
+                        }
+                    }
+                    
+                    // Clear error when user types
+                    codeError.style.display = 'none';
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value.length === 0) {
+                        if (index > 0) {
+                            codeInputs[index - 1].focus();
+                        }
+                    }
+                });
+            });
+
+            // Step 1: Send code
+            emailForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = emailInput.value.trim();
+                
+                if (!isValidEmail(email)) {
+                    emailError.style.display = 'block';
+                    return;
+                }
+                
+                emailError.style.display = 'none';
+                
+                // Simulate sending code
+                const btnText = sendCodeBtn.querySelector('.btn-text');
+                const btnLoading = sendCodeBtn.querySelector('.btn-loading');
+                
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                sendCodeBtn.disabled = true;
+                
+                setTimeout(() => {
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    sendCodeBtn.disabled = false;
+                    
+                    step1.style.display = 'none';
+                    step2.style.display = 'block';
+                }, 2000);
+            });
+
+            // Step 2: Verify code
+            codeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let code = '';
+                codeInputs.forEach(input => {
+                    code += input.value;
+                });
+                
+                // Simple validation - in real app, verify with backend
+                if (code.length !== 6) {
+                    codeError.style.display = 'block';
+                    return;
+                }
+                
+                codeError.style.display = 'none';
+                
+                // Simulate code verification
+                const btnText = verifyCodeBtn.querySelector('.btn-text');
+                const btnLoading = verifyCodeBtn.querySelector('.btn-loading');
+                
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                verifyCodeBtn.disabled = true;
+                
+                setTimeout(() => {
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    verifyCodeBtn.disabled = false;
+                    
+                    step2.style.display = 'none';
+                    step3.style.display = 'block';
+                }, 1500);
+            });
+
+            // Step 3: Reset password
+            passwordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const newPassword = newPasswordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                const requirements = checkPasswordStrength(newPassword);
+                
+                if (newPassword !== confirmPassword) {
+                    passwordError.style.display = 'block';
+                    return;
+                }
+                
+                if (!areAllRequirementsMet(requirements)) {
+                    passwordError.textContent = 'Veuillez respecter toutes les exigences de sécurité';
+                    passwordError.style.display = 'block';
+                    return;
+                }
+                
+                passwordError.style.display = 'none';
+                
+                // Simulate password reset
+                const btnText = resetPasswordBtn.querySelector('.btn-text');
+                const btnLoading = resetPasswordBtn.querySelector('.btn-loading');
+                
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                resetPasswordBtn.disabled = true;
+                
+                setTimeout(() => {
+                    step3.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    successLoginLink.style.display = 'block';
+                }, 2000);
+            });
+
+            // Navigation between steps
+            backToEmail1.addEventListener('click', function(e) {
+                e.preventDefault();
+                step2.style.display = 'none';
+                step1.style.display = 'block';
+            });
+            
+            backToEmail2.addEventListener('click', function(e) {
+                e.preventDefault();
+                step3.style.display = 'none';
+                step2.style.display = 'block';
+            });
+            
+            resendCode.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Simulate resending code
+                const originalText = resendCode.textContent;
+                resendCode.innerHTML = '<i class="fas fa-check"></i> Code envoyé!';
+                resendCode.style.color = 'var(--success)';
+                
+                setTimeout(() => {
+                    resendCode.textContent = originalText;
+                    resendCode.style.color = '';
+                }, 3000);
+            });
+
+            // Password strength real-time check
+            newPasswordInput.addEventListener('input', function() {
+                checkPasswordStrength(this.value);
+            });
+
+            // Real-time password confirmation check
+            confirmPasswordInput.addEventListener('input', function() {
+                if (this.value !== newPasswordInput.value && this.value.length > 0) {
+                    passwordError.style.display = 'block';
+                } else {
+                    passwordError.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

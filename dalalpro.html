@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalal Pro - Gagner plus chaque mois</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Logo image en haut à gauche */
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .logo-image {
+            height: 70px;
+            width: auto;
+            border-radius: 10%;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+
+        body {
+            background-color: #0a5c3b;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .container { 
+            background-color: #ffffff;
+            border: 3px solid #065f46;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #065f46;
+            margin-bottom: 25px;
+        }
+
+        .logo-text span {
+            color: #ffde59;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #000000;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #ffde59;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .question {
+            font-size: 1.1em;
+            color: #065f46;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .location-btn {
+            text-decoration: none;
+            background-color: #ffde59;
+            color: #065f46;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .location-btn:hover {
+            background-color: #f8d347;
+            color: #065f46;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .location-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-icon {
+            font-size: 1.2em;
+        }
+
+        /* Bouton "Publier l'annonce" */
+        .publish-btn {
+            text-decoration: none;
+            background: linear-gradient(135deg, #065f46, #0a5c3b);
+            color: white;
+            border: none;
+            padding: 20px 35px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(6, 95, 70, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .publish-btn:hover {
+            background: linear-gradient(135deg, #0a5c3b, #065f46);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(6, 95, 70, 0.4);
+        }
+
+        .publish-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .publish-icon {
+            font-size: 1.3em;
+        }
+
+        /* Section supplémentaire pour informations */
+        .info-section {
+            margin-top: 40px;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            border-left: 4px solid #ffde59;
+        }
+
+        .info-title {
+            font-size: 1.3em;
+            color: #065f46;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .info-text {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-container {
+                top: 15px;
+                left: 15px;
+            }
+
+            .logo-image {
+                height: 40px;
+            }
+
+            .container {
+                padding: 30px 20px;
+                margin-top: 30px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+            }
+
+            .location-btn {
+                min-width: 100%;
+            }
+            
+            .publish-btn {
+                padding: 18px 25px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container {
+                top: 10px;
+                left: 10px;
+            }
+
+            .logo-image {
+                height: 35px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            .location-btn {
+                padding: 15px 20px;
+                font-size: 1em;
+            }
+            
+            .publish-btn {
+                padding: 16px 20px;
+                font-size: 1em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="logo-text">Grâce à <span>Dalal Pro</span></div>
+        <h1>Gagner plus chaque mois</h1>
+        <p class="question">Quel type de location voulez-vous faire pour gagner de l'argent ?</p>
+
+        <div class="buttons-container">
+            <a href="/DalalPRO/IMMO/etapeimmo.html" class="location-btn">
+                <i class="fas fa-home btn-icon"></i>
+                Location Immobilier
+            </a>
+            <a href="/DalalPRO/AUTO/etape1-auto.html" class="location-btn">
+                <i class="fas fa-car btn-icon"></i>
+                Location Automobile
+            </a>
+        </div>
+        
+    
+        
+        <!-- Section d'informations supplémentaires -->
+        <div class="info-section">
+            <div class="info-title">Comment ça marche ?</div>
+            <p class="info-text">
+                Dalal Pro vous aide à générer des revenus supplémentaires en louant vos biens. 
+                Choisissez le type de location, remplissez les informations nécessaires et commencez à gagner de l'argent dès aujourd'hui !
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Effet de fade-in au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+
+            setTimeout(() => {
+                container.style.transition = 'all 0.8s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Animation pour le bouton "Publier l'annonce"
+            const publishBtn = document.getElementById('publishButton');
+            
+            // S'assurer que le bouton est toujours visible
+            publishBtn.style.display = 'inline-flex';
+            
+            publishBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Animation de pulsation
+                this.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 300);
+                
+                // Redirection après un léger délai pour voir l'animation
+                setTimeout(() => {
+                    // Redirection vers la page de publication d'annonce
+                    // Vous pouvez remplacer cette URL par la vôtre
+                    window.location.href = "/publier-annonce.html";
+                }, 400);
+            });
+            
+            // Vérification que tous les éléments sont visibles
+            console.log("Bouton 'Publier l'annonce' est présent:", document.getElementById('publishButton') !== null);
+        });
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,1438 @@
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E5E4E;
+            --secondary: #E1C85C;
+            --white: #FFFFFF;
+            --light-bg: #f5f7fa;
+            --gray: #e1e8ed;
+            --dark-gray: #333333;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1001;
+        }
+
+        .logo img {
+            height: clamp(40px, 8vw, 50px);
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        /* Navigation Desktop */
+        .desktop-nav {
+            display: flex;
+            gap: clamp(20px, 3vw, 35px);
+        }
+
+        .desktop-nav a  {
+
+        text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            color: var(--primary);
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            padding: 8px 0;
+        }
+
+        .desktop-nav a:hover  {   
+             background-color:  #1e4a3a;
+             padding: 10px;
+             border-radius: auto;
+            color: var(--secondary);
+            transform: translateY(-2px);
+   
+     }
+
+        .desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #f4d03f 100%);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .desktop-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Menu Burger */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(46, 94, 78, 0.1);
+            transform: scale(1.1);
+        }
+
+        /* Navigation Mobile */
+        .mobile-nav {
+             text-decoration: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20% 10%;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(25px, 6vw, 40px);
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mobile-nav a {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            font-weight: 600;
+            color: var(--primary);
+            padding: 12px 0;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            display: block;
+        }
+
+        .mobile-nav a:hover {
+            background-color: #1e4a3a;
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+            transform: translateX(10px);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .close-menu:hover {
+            background-color: rgba(46, 94, 78, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: clamp(70px, 12vw, 90px);
+            padding: 20px;
+        }
+
+        
+        .header {
+            margin-top: 100px;
+             margin-bottom: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .logo-text {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: #E1C85C;
+        }
+
+        .subtitle {
+            color: #2E5E4E;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .filters-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #2E5E4E;
+            color: #2E5E4E;
+            padding: 10px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #2E5E4E;
+            color: white;
+        }
+
+        .logements-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logement-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .logement-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f0f0f0; /* Couleur de fond en attendant les images */
+        }
+
+        .logement-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #E1C85C;
+            color: #2E5E4E;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .logement-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logement-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .logement-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .logement-location i {
+            color: #2E5E4E;
+        }
+
+        .logement-description {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .logement-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #2E5E4E;
+        }
+
+        .logement-feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logement-price {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .logement-price span {
+            font-size: 0.7em;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .reserve-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .reserve-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(46, 94, 78, 0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #2E5E4E;
+            font-size: 1.2em;
+            grid-column: 1 / -1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .header-container {
+                padding: 12px 0;
+            }
+            
+            .main-content {
+                margin-top: 70px;
+                padding: 15px;
+            }
+
+            .logements-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .filters {
+                max-width: 100%;
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            
+            .back-btn {
+                top: 85px;
+                left: 15px;
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+
+            .logo-text {
+                font-size: 2em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logements-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                gap: 6px;
+            }
+            
+            .filter-btn {
+                padding: 7px 12px;
+                font-size: 12px;
+            }
+            
+            .back-btn {
+                top: 80px;
+                left: 10px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                margin-top: 65px;
+                padding: 10px;
+            }
+
+            .logo-text {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+        }
+
+        /* Pour les très petits écrans */
+        @media (max-width: 360px) {
+            .filters {
+                gap: 5px;
+            }
+            
+            .filter-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+        }
+    </style>
+    <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalal Pro - Logements Disponibles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     </head>
+ <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E5E4E;
+            --secondary: #E1C85C;
+            --white: #FFFFFF;
+            --light-bg: #f5f7fa;
+            --gray: #e1e8ed;
+            --dark-gray: #333333;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1001;
+        }
+
+        .logo img {
+            height: clamp(40px, 8vw, 50px);
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        /* Navigation Desktop */
+        .desktop-nav {
+            display: flex;
+            gap: clamp(20px, 3vw, 35px);
+        }
+
+        .desktop-nav a  {
+
+        text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            color: var(--primary);
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            padding: 8px 0;
+        }
+
+        .desktop-nav a:hover  {   
+             background-color:  #1e4a3a;
+             padding: 10px;
+             border-radius: auto;
+            color: var(--secondary);
+            transform: translateY(-2px);
+   
+     }
+
+        .desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #f4d03f 100%);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .desktop-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Menu Burger */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(46, 94, 78, 0.1);
+            transform: scale(1.1);
+        }
+
+        /* Navigation Mobile */
+        .mobile-nav {
+             text-decoration: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 20% 10%;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(25px, 6vw, 40px);
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mobile-nav a {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            font-weight: 600;
+            color: var(--primary);
+            padding: 12px 0;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            display: block;
+        }
+
+        .mobile-nav a:hover {
+            background-color: #1e4a3a;
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+            transform: translateX(10px);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .close-menu:hover {
+            background-color: rgba(46, 94, 78, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: clamp(70px, 12vw, 90px);
+            padding: 20px;
+        }
+
+        
+        .header {
+            margin-top: 100px;
+             margin-bottom: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .logo-text {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: #E1C85C;
+        }
+
+        .subtitle {
+            color: #2E5E4E;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .filters-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #2E5E4E;
+            color: #2E5E4E;
+            padding: 10px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #2E5E4E;
+            color: white;
+        }
+
+        .logements-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logement-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .logement-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f0f0f0; /* Couleur de fond en attendant les images */
+        }
+
+        .logement-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #E1C85C;
+            color: #2E5E4E;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .logement-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logement-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .logement-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .logement-location i {
+            color: #2E5E4E;
+        }
+
+        .logement-description {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .logement-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #2E5E4E;
+        }
+
+        .logement-feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logement-price {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .logement-price span {
+            font-size: 0.7em;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .reserve-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .reserve-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(46, 94, 78, 0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #2E5E4E;
+            font-size: 1.2em;
+            grid-column: 1 / -1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .header-container {
+                padding: 12px 0;
+            }
+            
+            .main-content {
+                margin-top: 70px;
+                padding: 15px;
+            }
+
+            .logements-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .filters {
+                max-width: 100%;
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            
+            .back-btn {
+                top: 85px;
+                left: 15px;
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+
+            .logo-text {
+                font-size: 2em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logements-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                gap: 6px;
+            }
+            
+            .filter-btn {
+                padding: 7px 12px;
+                font-size: 12px;
+            }
+            
+            .back-btn {
+                top: 80px;
+                left: 10px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                margin-top: 65px;
+                padding: 10px;
+            }
+
+            .logo-text {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+        }
+
+        /* Pour les très petits écrans */
+        @media (max-width: 360px) {
+            .filters {
+                gap: 5px;
+            }
+            
+            .filter-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+        }
+    </style>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="logodalal.jpg" alt="Logo Dalal Sénégal">
+                <div class="logo-text">Dalal</div>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="/logement.html">Logement</a>
+                <a href="/transport.html">Transport</a>
+                <a href="/decouverte.html">Découverte</a>
+                <a href="/Security/identification/backend identif/index.html">s'inscrire</a> 
+                <a href="/plus.html">Plus</a>
+            </nav>
+            
+            <button class="menu-toggle" aria-label="Ouvrir le menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="mobile-nav">
+                <button class="close-menu" aria-label="Fermer le menu">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul>
+                    <li><a href="/logement.html">Logement</a></li>
+                    <li><a href="/transport.html">Transport</a></li>
+                    <li><a href="/decouverte.html">Découverte</a></li>
+                    <li><a href="creecompte.html">s'inscrire</a></li>
+                    <li><a href="/plus.html">Plus</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+        <div class="header">
+            <div class="logo-text">Dalal <span>Pro</span></div>
+            <p class="subtitle">Découvrez nos logements disponibles</p>
+            
+            <div class="filters-container">
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="appartement">Appartements</button>
+                    <button class="filter-btn" data-filter="maison">Maisons</button>
+                    <button class="filter-btn" data-filter="studio">Studios</button>
+                    <button class="filter-btn" data-filter="villa">Villas</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="logements-container" id="logements-container">
+            <!-- Les logements seront générés dynamiquement par JavaScript -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Dalal Pro</h3>
+                <p>Votre partenaire de confiance pour trouver les meilleurs logements au Sénégal.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Suivez-nous sur Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Suivez-nous sur Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Suivez-nous sur Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Suivez-nous sur YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Nos Services</h3>
+                <ul>
+                    <li><a href="/logement.html">Logement meublé</a></li>
+                    <li><a href="/transport.html">Location voiture</a></li>
+                    <li><a href="/decouverte.html">Excursions</a></li>
+                    <li><a href="/decouverte.html">Circuits sur mesure</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> info@dalalpro.sn</li>
+                    <li><i class="fas fa-phone"></i> +221 33 123 45 67</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 Dalal Pro. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu burger mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const closeMenu = document.querySelector('.close-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav a');
+
+        // Ouvrir le menu mobile
+        menuToggle.addEventListener('click', function() {
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Fermer le menu mobile
+        closeMenu.addEventListener('click', function() {
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Fermer le menu en cliquant sur un lien
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Fermer le menu en appuyant sur Echap
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Données des logements (enrichies)
+        const logements = [
+            {
+                id: 1,
+                titre: "Appartement moderne à Dakar Plateau",
+                type: "appartement",
+                image: "LOGE1.jpg",
+                location: "Dakar Plateau, Dakar",
+                description: "Bel appartement lumineux avec vue sur la mer. Proche de tous les services et commodités.",
+                prix: 18000,
+                periode: "mois",
+                badge: "Populaire",
+                chambres: 2,
+                salleBain: 1,
+                surface: "75 m²",
+                equipements: ["WiFi", "Parking", "Climatisation", "Cuisine équipée"]
+            },
+            {
+                id: 2,
+                titre: "Villa avec piscine à Almadies",
+                type: "villa",
+                image: "LOGE2.jpg",
+                location: "Almadies, Dakar",
+                description: "Magnifique villa avec piscine privée et jardin. Idéale pour famille ou professionnels.",
+                prix: 45000,
+                periode: "mois",
+                badge: "Luxe",
+                chambres: 4,
+                salleBain: 3,
+                surface: "200 m²",
+                equipements: ["Piscine", "Jardin", "Garage", "Climatisation", "Sécurité"]
+            },
+            {
+                id: 3,
+                titre: "Studio meublé à Ouakam",
+                type: "studio",
+                image: "LOGE3.jpg",
+                location: "Ouakam, Dakar",
+                description: "Studio entièrement meublé et équipé. Idéal pour étudiant ou jeune professionnel.",
+                prix: 60000,
+                periode: "mois",
+                badge: "Économique",
+                chambres: 1,
+                salleBain: 1,
+                surface: "35 m²",
+                equipements: ["WiFi", "Cuisine équipée", "Meublé"]
+            },
+            {
+                id: 4,
+                titre: "Maison familiale à Mermoz",
+                type: "maison",
+                image: "LOGE4.jpg",
+                location: "Mermoz, Dakar",
+                description: "Belle maison familiale avec cour et garage. Quartier calme et résidentiel.",
+                prix: 20000,
+                periode: "mois",
+                badge: "Famille",
+                chambres: 3,
+                salleBain: 2,
+                surface: "120 m²",
+                equipements: ["Cour", "Garage", "Cuisine équipée", "Salon spacieux"]
+            },
+            {
+                id: 5,
+                titre: "Appartement standing à Sacré-Cœur",
+                type: "appartement",
+                image: "LOGE5.jpg",
+                location: "Sacré-Cœur, Dakar",
+                description: "Appartement haut standing avec balcon et vue panoramique. Résidence sécurisée.",
+                prix: 18000,
+                periode: "mois",
+                badge: "Standing",
+                chambres: 2,
+                salleBain: 2,
+                surface: "85 m²",
+                equipements: ["Balcon", "Vue mer", "Sécurité", "Ascenseur"]
+            },
+            {
+                id: 6,
+                titre: "Villa moderne à Ngor",
+                type: "villa",
+                image: "LOGE6.jpg",
+                location: "Ngor, Dakar",
+                description: "Villa moderne avec terrasse et jardin. À proximité de la plage et des restaurants.",
+                prix: 35000,
+                periode: "mois",
+                badge: "Vue mer",
+                chambres: 3,
+                salleBain: 2,
+                surface: "150 m²",
+                equipements: ["Terrasse", "Jardin", "Proche plage", "Parking"]
+            }
+        ];
+
+        // Fonction pour afficher les logements
+        function afficherLogements(logementsAAfficher) {
+            const container = document.getElementById('logements-container');
+            container.innerHTML = '';
+
+            if (logementsAAfficher.length === 0) {
+                container.innerHTML = '<div class="no-results">Aucun logement trouvé pour cette catégorie.</div>';
+                return;
+            }
+
+            logementsAAfficher.forEach(logement => {
+                const card = document.createElement('div');
+                card.className = 'logement-card';
+                card.innerHTML = `
+                    <div style="position: relative;">
+                        <img src="${logement.image}" alt="${logement.titre}" class="logement-image">
+                        ${logement.badge ? `<div class="logement-badge">${logement.badge}</div>` : ''}
+                    </div>
+                    <div class="logement-content">
+                        <h3 class="logement-title">${logement.titre}</h3>
+                        <div class="logement-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${logement.location}</span>
+                        </div>
+                        <p class="logement-description">${logement.description}</p>
+                        <div class="logement-features">
+                            <div class="logement-feature">
+                                <i class="fas fa-bed"></i>
+                                <span>${logement.chambres} chambre${logement.chambres > 1 ? 's' : ''}</span>
+                            </div>
+                            <div class="logement-feature">
+                                <i class="fas fa-bath"></i>
+                                <span>${logement.salleBain} salle${logement.salleBain > 1 ? 's' : ''} de bain</span>
+                            </div>
+                            <div class="logement-feature">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>${logement.surface}</span>
+                            </div>
+                        </div>
+                        <div class="logement-price">
+                            ${logement.prix.toLocaleString()} FCFA
+                            <span>/ ${logement.periode}</span>
+                        </div>
+                        <a href="reserver.html?id=${logement.id}" class="reserve-btn">
+                            <i class="fas fa-calendar-check"></i>
+                            Réserver
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Fonction pour filtrer les logements
+        function filtrerLogements(type) {
+            const logementsFiltres = type === 'all' 
+                ? logements 
+                : logements.filter(logement => logement.type === type);
+            
+            afficherLogements(logementsFiltres);
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Afficher tous les logements au chargement
+            afficherLogements(logements);
+            
+            // Gestion des filtres
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Retirer la classe active de tous les boutons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.add('active');
+                    // Filtrer les logements
+                    const filter = this.getAttribute('data-filter');
+                    filtrerLogements(filter);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

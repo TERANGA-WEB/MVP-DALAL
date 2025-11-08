@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalal Pro - Transports Disponibles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 94, 78, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            width: fit-content;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 94, 78, 0.4);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .logo-text {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: #E1C85C;
+        }
+
+        .subtitle {
+            color: #2E5E4E;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .filters-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #2E5E4E;
+            color: #2E5E4E;
+            padding: 10px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #2E5E4E;
+            color: white;
+        }
+
+        .transports-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .transport-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .transport-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .transport-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f0f0f0; /* Couleur de fond en attendant les images */
+        }
+
+        .transport-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #E1C85C;
+            color: #2E5E4E;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .transport-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .transport-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .transport-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .transport-location i {
+            color: #2E5E4E;
+        }
+
+        .transport-description {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .transport-price {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .transport-price span {
+            font-size: 0.7em;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .reserve-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .reserve-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(46, 94, 78, 0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #2E5E4E;
+            font-size: 1.2em;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .transports-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .filters {
+                max-width: 100%;
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            
+            .back-btn {
+                top: 15px;
+                left: 15px;
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .transports-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                gap: 6px;
+            }
+            
+            .filter-btn {
+                padding: 7px 12px;
+                font-size: 12px;
+            }
+            
+            .back-btn {
+                top: 10px;
+                left: 10px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+
+        /* Pour les très petits écrans */
+        @media (max-width: 360px) {
+            .filters {
+                gap: 5px;
+            }
+            
+            .filter-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i>
+        Retour
+    </button>
+
+    <div class="header">
+        <div class="logo-text">Dalal <span>Pro</span></div>
+        <p class="subtitle">Découvrez nos véhicules disponibles</p>
+        
+        <div class="filters-container">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="voiture">Voitures</button>
+                <button class="filter-btn" data-filter="moto">Motos</button>
+                <button class="filter-btn" data-filter="suv">SUV/4x4</button>
+                <button class="filter-btn" data-filter="utilitaire">Utilitaires</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="transports-container" id="transports-container">
+        <!-- Les transports seront générés dynamiquement par JavaScript -->
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        // Données des transports
+        const transports = [
+            {
+                id: 1,
+                titre: "Toyota Corolla 2023",
+                type: "voiture",
+                image: "AUTO1.jpg",
+                location: "Dakar Plateau, Dakar",
+                description: "Voiture familiale économique et fiable. Parfaite pour la ville et les longs trajets. Climatisation et équipements modernes.",
+                prix: 25000,
+                periode: "jour",
+                badge: "Économique",
+                marque: "Toyota",
+                modele: "Corolla",
+                annee: 2023,
+                places: 5,
+                transmission: "Automatique",
+                climatisation: true,
+                equipements: ["GPS", "Climatisation", "Radio Bluetooth", "Airbags", "Caméra de recul"]
+            },
+            {
+                id: 2,
+                titre: "Range Rover Sport",
+                type: "suv",
+                image: "AUTO2.jpg",
+                location: "Almadies, Dakar",
+                description: "SUV de luxe tout équipé. Confort exceptionnel et performances remarquables. Idéal pour les familles et les voyages.",
+                prix: 80000,
+                periode: "jour",
+                badge: "Luxe",
+                marque: "Range Rover",
+                modele: "Sport",
+                annee: 2023,
+                places: 5,
+                transmission: "Automatique",
+                climatisation: true,
+                equipements: ["GPS", "Toit panoramique", "Sièges cuir", "Système audio premium", "4x4"]
+            },
+            {
+                id: 3,
+                titre: "Yamaha MT-07",
+                type: "moto",
+                image: "AUTO3.jpg",
+                location: "Ouakam, Dakar",
+                description: "Moto sportive agile et puissante. Parfaite pour la ville et les routes sinueuses. Consommation économique.",
+                prix: 15000,
+                periode: "jour",
+                badge: "Sportive",
+                marque: "Yamaha",
+                modele: "MT-07",
+                annee: 2023,
+                places: 2,
+                transmission: "Manuelle",
+                climatisation: false,
+                equipements: ["Casque fourni", "Antivol", "Top case", "Assurance"]
+            },
+            {
+                id: 4,
+                titre: "Mercedes Classe C",
+                type: "voiture",
+                image: "AUTO4.jpg",
+                location: "Mermoz, Dakar",
+                description: "Berline premium au design élégant. Intérieur luxueux et technologies avancées. Confort et sécurité optimales.",
+                prix: 45000,
+                periode: "jour",
+                badge: "Premium",
+                marque: "Mercedes",
+                modele: "Classe C",
+                annee: 2023,
+                places: 5,
+                transmission: "Automatique",
+                climatisation: true,
+                equipements: ["GPS", "Sièges cuir", "Toit ouvrant", "Système audio premium", "Assistance conduite"]
+            },
+            {
+                id: 5,
+                titre: "Toyota Hilux 4x4",
+                type: "suv",
+                image: "AUTO5.jpg",
+                location: "Sacré-Cœur, Dakar",
+                description: "Pick-up robuste et fiable. Idéal pour les terrains difficiles et le transport de marchandises. 4x4 permanent.",
+                prix: 35000,
+                periode: "jour",
+                badge: "4x4",
+                marque: "Toyota",
+                modele: "Hilux",
+                annee: 2023,
+                places: 5,
+                transmission: "Manuelle",
+                climatisation: true,
+                equipements: ["GPS", "4x4", "Plateau", "Barres de toit", "Sièges en tissu"]
+            },
+            {
+                id: 6,
+                titre: "Renault Kangoo",
+                type: "utilitaire",
+                image: "AUTO6.jpg",
+                location: "Ngor, Dakar",
+                description: "Véhicule utilitaire spacieux et économique. Parfait pour le transport de matériel ou les déménagements.",
+                prix: 20000,
+                periode: "jour",
+                badge: "Utilitaire",
+                marque: "Renault",
+                modele: "Kangoo",
+                annee: 2023,
+                places: 2,
+                transmission: "Manuelle",
+                climatisation: true,
+                equipements: ["Grand volume", "Portes coulissantes", "Sièges basculants", "Radio"]
+            },
+            {
+                id: 7,
+                titre: "Honda Civic 2023",
+                type: "voiture",
+                image: "AUTO4.jpg",
+                location: "Point E, Dakar",
+                description: "Compacte sportive au design moderne. Économique et fiable. Idéale pour la ville et les trajets quotidiens.",
+                prix: 22000,
+                periode: "jour",
+                badge: "Compacte",
+                marque: "Honda",
+                modele: "Civic",
+                annee: 2023,
+                places: 5,
+                transmission: "Automatique",
+                climatisation: true,
+                equipements: ["GPS", "Climatisation", "Radio Bluetooth", "Caméra de recul", "Régulateur de vitesse"]
+            },
+            {
+                id: 8,
+                titre: "BMW Série 3",
+                type: "voiture",
+                image: "AUTO1.jpg",
+                location: "Fann, Dakar",
+                description: "Berline sportive allemande. Conduite dynamique et intérieur haut de gamme. Technologies dernier cri.",
+                prix: 55000,
+                periode: "jour",
+                badge: "Sportive",
+                marque: "BMW",
+                modele: "Série 3",
+                annee: 2023,
+                places: 5,
+                transmission: "Automatique",
+                climatisation: true,
+                equipements: ["GPS", "Sièges sport", "Toit ouvrant", "Système audio Harman Kardon", "Conduite assistée"]
+            }
+        ];
+
+        // Fonction pour afficher les transports
+        function afficherTransports(transportsAAfficher) {
+            const container = document.getElementById('transports-container');
+            container.innerHTML = '';
+
+            if (transportsAAfficher.length === 0) {
+                container.innerHTML = '<div class="no-results">Aucun véhicule trouvé pour cette catégorie.</div>';
+                return;
+            }
+
+            transportsAAfficher.forEach(transport => {
+                const card = document.createElement('div');
+                card.className = 'transport-card';
+                card.innerHTML = `
+                    <div style="position: relative;">
+                        <img src="${transport.image}" alt="${transport.titre}" class="transport-image">
+                        ${transport.badge ? `<div class="transport-badge">${transport.badge}</div>` : ''}
+                    </div>
+                    <div class="transport-content">
+                        <h3 class="transport-title">${transport.titre}</h3>
+                        <div class="transport-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${transport.location}</span>
+                        </div>
+                        <p class="transport-description">${transport.description}</p>
+                        <div class="transport-price">
+                            ${transport.prix.toLocaleString()} FCFA
+                            <span>/ ${transport.periode}</span>
+                        </div>
+                        <button class="reserve-btn" onclick="reserverTransport(${transport.id})">
+                            <i class="fas fa-calendar-check"></i>
+                            Réserver
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Fonction pour filtrer les transports
+        function filtrerTransports(type) {
+            const transportsFiltres = type === 'all' 
+                ? transports 
+                : transports.filter(transport => transport.type === type);
+            
+            afficherTransports(transportsFiltres);
+        }
+
+        // Fonction de réservation - REDIRECTION VERS RESERVER-T.HTML
+        function reserverTransport(id) {
+            // Redirection vers la page de réservation avec l'ID de la voiture
+            window.location.href = `reserver-T.html?id=${id}`;
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Afficher tous les transports au chargement
+            afficherTransports(transports);
+            
+            // Gestion des filtres
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Retirer la classe active de tous les boutons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.add('active');
+                    // Filtrer les transports
+                    const filter = this.getAttribute('data-filter');
+                    filtrerTransports(filter);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

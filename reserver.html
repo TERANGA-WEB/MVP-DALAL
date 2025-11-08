@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalal Pro - Logement & Réservation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E5E4E;
+            --secondary: #E1C85C;
+            --white: #FFFFFF;
+            --light-bg: #f5f7fa;
+            --gray: #e1e8ed;
+            --dark-gray: #333333;
+            --shadow: 0 10px 30px rgba(46, 94, 78, 0.1);
+            --radius: 12px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .desktop-nav {
+            display: flex;
+            gap: 35px;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .desktop-nav a:hover {
+            color: var(--secondary);
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        /* Pages Container */
+        .pages-container {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .page {
+            transition: all 0.4s ease-in-out;
+            padding-top: 100px;
+        }
+
+        .page.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* PAGE 1 - Détail Logement */
+        .main-content {
+            margin-top: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(46, 94, 78, 0.3);
+        }
+
+        .logement-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .logement-gallery {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .image-thumbnails {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail.active {
+            opacity: 1;
+            border: 2px solid var(--primary);
+        }
+
+        .logement-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #E1C85C;
+            color: #2E5E4E;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .logement-info {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logement-header {
+            margin-bottom: 25px;
+        }
+
+        .logement-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .logement-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .logement-price {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 20px;
+        }
+
+        .logement-price span {
+            font-size: 0.7em;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .reserve-btn-top {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .reserve-btn-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 94, 78, 0.4);
+        }
+
+        .logement-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        .logement-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2E5E4E;
+        }
+
+        .feature i {
+            color: #E1C85C;
+            font-size: 1.2em;
+        }
+
+        .equipements {
+            margin-bottom: 25px;
+        }
+
+        .equipements h3 {
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .equipements-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .equipement-tag {
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .similar-logements {
+            margin-top: 50px;
+        }
+
+        .section-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .similar-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .similar-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .similar-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .similar-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .similar-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #E1C85C;
+            color: #2E5E4E;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.6em;
+            font-weight: 600;
+        }
+
+        .similar-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .similar-title {
+            font-size: 0.95em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .similar-location {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #666;
+            margin-bottom: 8px;
+            font-size: 0.75em;
+        }
+
+        .similar-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.7em;
+            color: #2E5E4E;
+        }
+
+        .similar-feature {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .similar-price {
+            font-size: 1em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .similar-price span {
+            font-size: 0.7em;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .voir-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            text-decoration: none;
+            font-size: 0.8em;
+            width: 100%;
+        }
+
+        .voir-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(46, 94, 78, 0.3);
+        }
+
+        /* PAGE 2 - Réservation */
+        .form-section {
+            min-height: calc(100vh - 100px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .illustration {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, #1e4a3a 100%);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .illustration::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            top: -50px;
+            right: -50px;
+        }
+
+        .illustration::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            bottom: -50px;
+            left: -50px;
+        }
+
+        .illustration-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .illustration i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .illustration h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .illustration p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .form-container {
+            flex: 1.2;
+            padding: 40px;
+        }
+
+        .form-back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(46, 94, 78, 0.1);
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            z-index: 10;
+        }
+
+        .form-back-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-3px);
+        }
+
+        .form-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .subtitle {
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-gray);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1.5px solid var(--gray);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 94, 78, 0.1);
+        }
+
+        .name-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .name-group > div {
+            flex: 1;
+        }
+
+        .date-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .date-group > div {
+            flex: 1;
+        }
+
+        .guests-container {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid var(--gray);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .guests-container button {
+            background: rgba(46, 94, 78, 0.1);
+            border: none;
+            width: 40px;
+            height: 50px;
+            font-size: 18px;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .guests-container button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .guests-container input {
+            flex: 1;
+            text-align: center;
+            padding: 15px 5px;
+            border: none;
+            border-left: 1.5px solid var(--gray);
+            border-right: 1.5px solid var(--gray);
+            border-radius: 0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, #1e4a3a 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(46, 94, 78, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 94, 78, 0.4);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1024px) {
+            .similar-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logement-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-content {
+                margin-top: 0;
+                padding: 15px;
+            }
+            
+            .logement-title {
+                font-size: 1.6em;
+            }
+            
+            .logement-price {
+                font-size: 1.8em;
+            }
+
+            .similar-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+            
+            .illustration {
+                padding: 30px;
+            }
+            
+            .form-container {
+                padding: 30px;
+            }
+            
+            .form-back-btn {
+                top: 15px;
+                left: 15px;
+            }
+            
+            .name-group, .date-group {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logement-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 10px;
+            }
+
+            .similar-container {
+                grid-template-columns: 1fr;
+            }
+
+            .similar-image {
+                height: 120px;
+            }
+
+            .similar-content {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="logodalal.jpg" alt="Logo Dalal Sénégal">
+                <div class="logo-text">Dalal</div>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="/logement.html">Logement</a>
+                <a href="/transport.html">Transport</a>
+                <a href="/decouverte.html">Découverte</a>
+                <a href="creecompte.html">s'inscrire</a> 
+                <a href="/plus.html">Plus</a>
+            </nav>
+            
+            <button class="menu-toggle" aria-label="Ouvrir le menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="pages-container">
+        <!-- PAGE 1 - Détail du Logement -->
+        <div id="page1" class="page active">
+            <main class="main-content">
+                <a href="logement.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour aux logements
+                </a>
+
+                <div class="logement-detail" id="logementDetail">
+                    <!-- Le contenu sera généré dynamiquement par JavaScript -->
+                </div>
+
+                <!-- Section Logements Similaires -->
+                <div class="similar-logements">
+                    <h2 class="section-title">Logements Similaires</h2>
+                    <div class="similar-container" id="similarLogements">
+                        <!-- Les logements similaires seront générés dynamiquement -->
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>Dalal Pro</h3>
+                        <p>Votre partenaire de confiance pour trouver les meilleurs logements au Sénégal.</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Suivez-nous sur Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Suivez-nous sur Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Suivez-nous sur Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Suivez-nous sur YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Nos Services</h3>
+                        <ul>
+                            <li><a href="logement.html">Logement meublé</a></li>
+                            <li><a href="transport.html">Location voiture</a></li>
+                            <li><a href="decouverte.html">Excursions</a></li>
+                            <li><a href="decouverte.html">Circuits sur mesure</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Contact</h3>
+                        <ul>
+                            <li><i class="fas fa-envelope"></i> info@dalalpro.sn</li>
+                            <li><i class="fas fa-phone"></i> +221 33 123 45 67</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2023 Dalal Pro. Tous droits réservés.</p>
+                </div>
+            </footer>
+        </div>
+
+        <!-- PAGE 2 - Formulaire de Réservation -->
+        <div id="page2" class="page hidden">
+            <section class="form-section">
+                <div class="container">
+                    <!-- Bouton de retour vers la page 1 -->
+                    <button class="form-back-btn" onclick="showPage('page1')">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour
+                    </button>
+                    
+                    <div class="illustration">
+                        <div class="illustration-content">
+                            <i class="fas fa-home"></i>
+                            <h2>Trouvez le logement parfait</h2>
+                            <p>Réservez facilement votre hébergement avec Dalal. Des milliers de propriétaires vous attendent.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-container">
+                        <h1 class="form-title">Réservez votre logement</h1>
+                        <p class="subtitle">Remplissez les informations ci-dessous pour finaliser votre réservation</p>
+                        
+                        <form id="reservationForm">
+                            <div class="form-group name-group">
+                                <div>
+                                    <label for="prenom">Prénom</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="nom">Nom</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group date-group">
+                                <div>
+                                    <label for="arrivee">Date d'arrivée</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <input type="date" id="arrivee" name="arrivee" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="depart">Date de départ</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <input type="date" id="depart" name="depart" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="invites">Nombre d'invités</label>
+                                <div class="guests-container">
+                                    <button type="button" id="decrease-guests">-</button>
+                                    <input type="number" id="invites" name="invites" min="1" max="10" value="1" readonly>
+                                    <button type="button" id="increase-guests">+</button>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-check-circle"></i>
+                                Confirmer la réservation
+                            </button>
+                            
+                            <p class="form-footer">Vous recevrez une confirmation par email sous 24h</p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Données des logements
+        const logements = [
+            {
+                id: 1,
+                titre: "Appartement moderne à Dakar Plateau",
+                type: "appartement",
+                image: "LOGE1.jpg",
+                location: "Dakar Plateau, Dakar",
+                description: "Bel appartement lumineux avec vue sur la mer. Proche de tous les services et commodités.",
+                prix: 120000,
+                periode: "mois",
+                badge: "Populaire",
+                chambres: 2,
+                salleBain: 1,
+                surface: "75 m²",
+                equipements: ["WiFi", "Parking", "Climatisation", "Cuisine équipée", "Vue mer"]
+            },
+            {
+                id: 2,
+                titre: "Villa avec piscine à Almadies",
+                type: "villa",
+                image: "LOGE2.jpg",
+                location: "Almadies, Dakar",
+                description: "Magnifique villa avec piscine privée et jardin. Idéale pour famille ou professionnels.",
+                prix: 450000,
+                periode: "mois",
+                badge: "Luxe",
+                chambres: 4,
+                salleBain: 3,
+                surface: "200 m²",
+                equipements: ["Piscine", "Jardin", "Garage", "Climatisation", "Sécurité 24h/24"]
+            },
+            {
+                id: 3,
+                titre: "Studio meublé à Ouakam",
+                type: "studio",
+                image: "LOGE3.jpg",
+                location: "Ouakam, Dakar",
+                description: "Studio entièrement meublé et équipé. Idéal pour étudiant ou jeune professionnel.",
+                prix: 60000,
+                periode: "mois",
+                badge: "Économique",
+                chambres: 1,
+                salleBain: 1,
+                surface: "35 m²",
+                equipements: ["WiFi", "Cuisine équipée", "Meublé", "Proche transports"]
+            },
+            {
+                id: 4,
+                titre: "Maison familiale à Mermoz",
+                type: "maison",
+                image: "LOGE4.jpg",
+                location: "Mermoz, Dakar",
+                description: "Belle maison familiale avec cour et garage. Quartier calme et résidentiel.",
+                prix: 200000,
+                periode: "mois",
+                badge: "Famille",
+                chambres: 3,
+                salleBain: 2,
+                surface: "120 m²",
+                equipements: ["Cour", "Garage", "Cuisine équipée", "Salon spacieux", "Jardin"]
+            },
+            {
+                id: 5,
+                titre: "Appartement standing à Sacré-Cœur",
+                type: "appartement",
+                image: "LOGE5.jpg",
+                location: "Sacré-Cœur, Dakar",
+                description: "Appartement haut standing avec balcon et vue panoramique. Résidence sécurisée.",
+                prix: 180000,
+                periode: "mois",
+                badge: "Standing",
+                chambres: 2,
+                salleBain: 2,
+                surface: "85 m²",
+                equipements: ["Balcon", "Vue mer", "Sécurité", "Ascenseur", "Parking souterrain"]
+            },
+            {
+                id: 6,
+                titre: "Villa moderne à Ngor",
+                type: "villa",
+                image: "LOGE6.jpg",
+                location: "Ngor, Dakar",
+                description: "Villa moderne avec terrasse et jardin. À proximité de la plage et des restaurants.",
+                prix: 350000,
+                periode: "mois",
+                badge: "Vue mer",
+                chambres: 3,
+                salleBain: 2,
+                surface: "150 m²",
+                equipements: ["Terrasse", "Jardin", "Proche plage", "Parking", "Climatisation"]
+            }
+        ];
+
+        // Fonction pour naviguer entre les pages
+        function showPage(pageId) {
+            // Cacher toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+                page.classList.add('hidden');
+            });
+            
+            // Afficher la page demandée
+            const targetPage = document.getElementById(pageId);
+            targetPage.classList.remove('hidden');
+            targetPage.classList.add('active');
+            
+            // Scroll vers le haut
+            window.scrollTo(0, 0);
+        }
+
+        // Fonction pour charger les détails du logement
+        function chargerDetailsLogement(id) {
+            const logement = logements.find(l => l.id == id);
+            if (!logement) {
+                document.getElementById('logementDetail').innerHTML = '<div class="no-results">Logement non trouvé</div>';
+                return;
+            }
+
+            const detailContainer = document.getElementById('logementDetail');
+            detailContainer.innerHTML = `
+                <div class="logement-gallery">
+                    <img id="mainImage" src="${logement.image}" alt="${logement.titre}" class="main-image">
+                    <div class="logement-badge">${logement.badge}</div>
+                    
+                    <div class="image-thumbnails">
+                        <img src="${logement.image}" alt="Vue 1" class="thumbnail active" onclick="changeImage(this)">
+                        <img src="LOGE2.jpg" alt="Vue 2" class="thumbnail" onclick="changeImage(this)">
+                        <img src="LOGE3.jpg" alt="Vue 3" class="thumbnail" onclick="changeImage(this)">
+                        <img src="LOGE4.jpg" alt="Vue 4" class="thumbnail" onclick="changeImage(this)">
+                    </div>
+                </div>
+                
+                <div class="logement-info">
+                    <div class="logement-header">
+                        <h1 class="logement-title">${logement.titre}</h1>
+                        
+                        <div class="logement-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${logement.location}</span>
+                        </div>
+                        
+                        <div class="logement-price">
+                            ${logement.prix.toLocaleString()} FCFA <span>/ ${logement.periode}</span>
+                        </div>
+                        
+                        <!-- BOUTON RÉSERVER qui navigue vers la page 2 -->
+                        <button class="reserve-btn-top" onclick="showPage('page2')">
+                            <i class="fas fa-calendar-check"></i>
+                            Réserver Maintenant
+                        </button>
+                    </div>
+                    
+                    <p class="logement-description">
+                        ${logement.description} Cet logement entièrement meublé comprend ${logement.chambres} chambre${logement.chambres > 1 ? 's' : ''}, ${logement.salleBain} salle${logement.salleBain > 1 ? 's' : ''} de bain et une surface de ${logement.surface}.
+                    </p>
+                    
+                    <div class="logement-features">
+                        <div class="feature">
+                            <i class="fas fa-bed"></i>
+                            <span>${logement.chambres} Chambre${logement.chambres > 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bath"></i>
+                            <span>${logement.salleBain} Salle${logement.salleBain > 1 ? 's' : ''} de bain</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>${logement.surface}</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-wifi"></i>
+                            <span>WiFi inclus</span>
+                        </div>
+                    </div>
+                    
+                    <div class="equipements">
+                        <h3>Équipements inclus</h3>
+                        <div class="equipements-list">
+                            ${logement.equipements.map(equip => `<span class="equipement-tag">${equip}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fonction pour afficher les logements similaires
+        function afficherLogementsSimilaires(logementActuelId) {
+            const logementActuel = logements.find(l => l.id == logementActuelId);
+            if (!logementActuel) return;
+
+            const logementsSimilaires = logements.filter(logement => 
+                logement.id != logementActuelId && logement.type === logementActuel.type
+            ).slice(0, 4);
+
+            const container = document.getElementById('similarLogements');
+            
+            if (logementsSimilaires.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1 / -1;">Aucun logement similaire trouvé</p>';
+                return;
+            }
+
+            container.innerHTML = logementsSimilaires.map(logement => `
+                <div class="similar-card">
+                    <div style="position: relative;">
+                        <img src="${logement.image}" alt="${logement.titre}" class="similar-image">
+                        ${logement.badge ? `<div class="similar-badge">${logement.badge}</div>` : ''}
+                    </div>
+                    <div class="similar-content">
+                        <h3 class="similar-title">${logement.titre}</h3>
+                        <div class="similar-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${logement.location}</span>
+                        </div>
+                        <div class="similar-features">
+                            <div class="similar-feature">
+                                <i class="fas fa-bed"></i>
+                                <span>${logement.chambres} ch.</span>
+                            </div>
+                            <div class="similar-feature">
+                                <i class="fas fa-bath"></i>
+                                <span>${logement.salleBain} sdb</span>
+                            </div>
+                            <div class="similar-feature">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span>${logement.surface}</span>
+                            </div>
+                        </div>
+                        <div class="similar-price">
+                            ${logement.prix.toLocaleString()} FCFA
+                            <span>/ ${logement.periode}</span>
+                        </div>
+                        <button class="voir-btn" onclick="chargerDetailsLogement(${logement.id}); showPage('page1');">
+                            <i class="fas fa-eye"></i>
+                            Voir
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fonction pour changer l'image principale
+        function changeImage(thumbnail) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = thumbnail.src;
+            
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            thumbnail.classList.add('active');
+        }
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const logementId = urlParams.get('id') || 1;
+            
+            chargerDetailsLogement(logementId);
+            afficherLogementsSimilaires(logementId);
+
+            // Configuration du formulaire de réservation
+            // Définir la date d'aujourd'hui comme date minimale pour l'arrivée
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('arrivee').setAttribute('min', today);
+            
+            // Mettre à jour la date minimale de départ quand la date d'arrivée change
+            document.getElementById('arrivee').addEventListener('change', function() {
+                document.getElementById('depart').setAttribute('min', this.value);
+            });
+            
+            // Gestion du nombre d'invités
+            const guestsInput = document.getElementById('invites');
+            const decreaseBtn = document.getElementById('decrease-guests');
+            const increaseBtn = document.getElementById('increase-guests');
+            
+            decreaseBtn.addEventListener('click', function() {
+                let value = parseInt(guestsInput.value);
+                if (value > 1) {
+                    guestsInput.value = value - 1;
+                }
+            });
+            
+            increaseBtn.addEventListener('click', function() {
+                let value = parseInt(guestsInput.value);
+                if (value < 10) {
+                    guestsInput.value = value + 1;
+                }
+            });
+            
+            // Gestion de la soumission du formulaire
+            document.getElementById('reservationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Récupération des valeurs du formulaire
+                const prenom = document.getElementById('prenom').value;
+                const nom = document.getElementById('nom').value;
+                const arrivee = document.getElementById('arrivee').value;
+                const depart = document.getElementById('depart').value;
+                const invites = document.getElementById('invites').value;
+                
+                // Validation basique
+                if (!prenom || !nom || !arrivee || !depart || !invites) {
+                    showMessage('Veuillez remplir tous les champs obligatoires.', 'error');
+                    return;
+                }
+                
+                // Vérification que la date de départ est après la date d'arrivée
+                if (new Date(depart) <= new Date(arrivee)) {
+                    showMessage('La date de départ doit être postérieure à la date d\'arrivée.', 'error');
+                    return;
+                }
+                
+                // Simulation d'envoi des données
+                const submitBtn = document.querySelector('.submit-btn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
+                submitBtn.disabled = true;
+                
+                setTimeout(function() {
+                    // Message de confirmation
+                    showMessage('Votre réservation a été soumise avec succès! Nous vous contacterons bientôt.', 'success');
+                    
+                    // Réinitialiser le formulaire
+                    document.getElementById('reservationForm').reset();
+                    guestsInput.value = 1;
+                    
+                    // Restaurer le bouton
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Retourner à la page des détails après 2 secondes
+                    setTimeout(() => showPage('page1'), 2000);
+                }, 2000);
+            });
+            
+            function showMessage(message, type) {
+                // Créer un élément de message temporaire
+                const messageEl = document.createElement('div');
+                messageEl.textContent = message;
+                messageEl.style.cssText = `
+                    position: fixed;
+                    top: 100px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 10px;
+                    color: white;
+                    font-weight: 600;
+                    z-index: 1000;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                    transition: all 0.3s ease;
+                    max-width: 300px;
+                `;
+                
+                if (type === 'success') {
+                    messageEl.style.background = 'linear-gradient(135deg, var(--primary) 0%, #1e4a3a 100%)';
+                } else {
+                    messageEl.style.background = 'linear-gradient(135deg, #FF6B6B 0%, #EE5A5A 100%)';
+                }
+                
+                document.body.appendChild(messageEl);
+                
+                // Supprimer le message après 5 secondes
+                setTimeout(function() {
+                    messageEl.style.opacity = '0';
+                    messageEl.style.transform = 'translateX(100px)';
+                    setTimeout(function() {
+                        document.body.removeChild(messageEl);
+                    }, 300);
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>

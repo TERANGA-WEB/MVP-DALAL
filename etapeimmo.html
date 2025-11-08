@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publier votre annonce - Dalal Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+/* ===== VARIABLES ET RESET ===== */
+:root {
+    --primary: #1a3c34;
+    --primary-light: #2E5E4E;
+    --primary-gradient: linear-gradient(135deg, #1a3c34 0%, #2E5E4E 100%);
+    --secondary: #E1C85C;
+    --secondary-dark: #d4b747;
+    --secondary-gradient: linear-gradient(135deg, #E1C85C 0%, #f4d03f 100%);
+    --white: #FFFFFF;
+    --light-bg: #f8faf9;
+    --gray-light: #e8eceb;
+    --gray: #9ca3af;
+    --gray-dark: #4b5563;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --radius: 20px;
+    --radius-sm: 12px;
+    --radius-lg: 24px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f8faf9 0%, #e8f5f1 50%, #e8eceb 100%);
+    color: var(--gray-dark);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.publication-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== HEADER PRINCIPAL ===== */
+.header-container {
+    background: var(--white);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 2rem;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo img {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+}
+
+.desktop-nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.desktop-nav a {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+}
+
+.desktop-nav a:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+    z-index: 1000;
+    padding: 2rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.mobile-nav.active {
+    display: block;
+    transform: translateX(0);
+}
+
+.close-menu {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.mobile-nav ul {
+    list-style: none;
+    margin-top: 3rem;
+}
+
+.mobile-nav li {
+    margin-bottom: 1rem;
+}
+
+.mobile-nav a {
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 1rem;
+    display: block;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.mobile-nav a:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+/* ===== CONTENU PRINCIPAL ===== */
+.publication-container {
+    flex: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    width: 100%;
+}
+
+/* ===== PROGRESSION ===== */
+.progress-container {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-gradient);
+    opacity: 0.1;
+}
+
+.progress-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin: 0 1rem;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gray-light);
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    transition: all 0.4s ease;
+    border: 3px solid transparent;
+    font-size: 1.1rem;
+    position: relative;
+    box-shadow: var(--shadow);
+}
+
+.step.active .step-number {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 4px rgba(225, 200, 92, 0.3);
+    transform: scale(1.1);
+}
+
+.step.completed .step-number {
+    background: var(--success);
+    color: var(--white);
+    border-color: var(--success);
+}
+
+.step-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--gray);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-text {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.progress-line {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    right: 25px;
+    height: 3px;
+    background: var(--gray-light);
+    z-index: 1;
+    border-radius: 2px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--success);
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 2px;
+}
+
+/* ===== PAGES ET FORMULAIRES ===== */
+.pages-container {
+    position: relative;
+    min-height: 60vh;
+}
+
+.page {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.page.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateX(-50px);
+}
+
+.page.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.form-container {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-gradient);
+}
+
+.form-container:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.form-section {
+    padding: 2.5rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    color: var(--gray);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* ===== ÉLÉMENTS DE FORMULAIRE ===== */
+.form-group {
+    margin-bottom: 1.75rem;
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.required::after {
+    content: " *";
+    color: var(--error);
+}
+
+.form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 1.25rem;
+    border: 2px solid var(--gray-light);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--white);
+    font-weight: 500;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(26, 60, 52, 0.1), inset 0 2px 4px rgba(0,0,0,0.05);
+    transform: translateY(-2px);
+}
+
+.form-input:valid:not(:placeholder-shown),
+.form-select:valid:not(:placeholder-shown) {
+    border-color: var(--success);
+    background-color: rgba(16, 185, 129, 0.05);
+}
+
+.form-input:invalid:not(:placeholder-shown),
+.form-select:invalid:not(:placeholder-shown) {
+    border-color: var(--error);
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+/* ===== CHAMPS AVEC ICÔNES ===== */
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.input-with-icon .form-input:focus + .input-icon,
+.input-with-icon .form-select:focus + .input-icon {
+    color: var(--primary);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.input-with-icon .form-input, 
+.input-with-icon .form-select {
+    padding-left: 3.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.char-count {
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-top: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.form-textarea:focus ~ .char-count {
+    color: var(--primary);
+}
+
+/* ===== UPLOAD D'IMAGES ===== */
+.upload-area {
+    border: 2px dashed var(--gray-light);
+    border-radius: var(--radius-sm);
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: var(--light-bg);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(26, 60, 52, 0.05), transparent);
+    transition: left 0.6s ease;
+}
+
+.upload-area:hover::before {
+    left: 100%;
+}
+
+.upload-area:hover, .upload-area.dragover {
+    border-color: var(--primary);
+    background: rgba(46, 94, 78, 0.05);
+    transform: translateY(-2px);
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover .upload-icon {
+    transform: scale(1.1) translateY(-5px);
+}
+
+.upload-text {
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.upload-hint {
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+.file-input {
+    display: none;
+}
+
+.preview-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.preview-item {
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    aspect-ratio: 1;
+}
+
+.preview-item:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lg);
+}
+
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remove-image {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(239, 68, 68, 0.95);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.8);
+    backdrop-filter: blur(10px);
+}
+
+.preview-item:hover .remove-image {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.remove-image:hover {
+    background: var(--error);
+    transform: scale(1.1);
+}
+
+/* ===== CHAMP PRIX ===== */
+.price-input {
+    position: relative;
+}
+
+.price-symbol {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1.1rem;
+    z-index: 2;
+}
+
+.price-input .form-input {
+    padding-left: 5rem;
+}
+
+/* ===== BOUTONS ===== */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.nav-btn {
+    flex: 1;
+    padding: 1.25rem 2rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.nav-btn:hover::before {
+    left: 100%;
+}
+
+.nav-btn.prev {
+    background: var(--light-bg);
+    color: var(--primary);
+    border: 2px solid var(--gray-light);
+}
+
+.nav-btn.prev:hover {
+    background: var(--gray-light);
+    transform: translateX(-3px);
+    box-shadow: var(--shadow);
+}
+
+.nav-btn.next, .nav-btn.publish {
+    background: var(--primary-gradient);
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+
+.nav-btn.next:hover, .nav-btn.publish:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl);
+}
+
+.nav-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ===== ÉTATS ET MESSAGES ===== */
+.error-message {
+    color: var(--error);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+    animation: shake 0.5s ease-in-out;
+}
+
+.success-message {
+    color: var(--success);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.form-group.error .form-input,
+.form-group.error .form-select,
+.form-group.error .form-textarea {
+    border-color: var(--error);
+    animation: shake 0.5s ease-in-out;
+}
+
+.form-group.error .error-message {
+    display: block;
+}
+
+.form-group.success .form-input,
+.form-group.success .form-select,
+.form-group.success .form-textarea {
+    border-color: var(--success);
+}
+
+.form-group.success .success-message {
+    display: block;
+}
+
+/* ===== INFOBULLES ===== */
+.tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: var(--gray-light);
+    color: var(--gray-dark);
+    border-radius: 50%;
+    font-size: 0.7rem;
+    cursor: help;
+    transition: all 0.3s ease;
+}
+
+.tooltip:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background: var(--primary);
+    color: var(--white);
+    text-align: center;
+    border-radius: var(--radius-sm);
+    padding: 0.75rem;
+    position: absolute;
+    z-index: 1000;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.8rem;
+    font-weight: 400;
+    box-shadow: var(--shadow-xl);
+    backdrop-filter: blur(10px);
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ===== MODAL DE CONFIRMATION ===== */
+.confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.confirmation-content {
+    background: var(--white);
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: var(--shadow-xl);
+    animation: modalAppear 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.confirmation-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-gradient);
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.confirmation-icon {
+    font-size: 4rem;
+    color: var(--success);
+    margin-bottom: 1.5rem;
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.confirmation-title {
+    color: var(--primary);
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.confirmation-text {
+    color: var(--gray-dark);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* ===== INDICATEURS ET LOADING ===== */
+.required-indicator {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 1rem;
+    text-align: right;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.loading {
+    animation: pulse 2s infinite;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .publication-container {
+        padding: 1rem;
+    }
+
+    .form-section {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .progress-steps {
+        flex-direction: column;
+        gap: 2rem;
+        margin: 0;
+    }
+
+    .progress-line {
+        display: none;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .preview-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .desktop-nav {
+        display: none;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-btn {
+        padding: 1rem 1.5rem;
+    }
+
+    .header-container {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0 1rem;
+    }
+
+    .form-section {
+        padding: 1.5rem 1rem;
+    }
+
+    .upload-area {
+        padding: 2rem 1rem;
+    }
+
+    .confirmation-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .nav-btn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    .progress-container {
+        padding: 1.5rem;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .step-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* ===== ANIMATIONS SUPPLÉMENTAIRES ===== */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===== AMÉLIORATIONS VISUELLES ===== */
+.form-container {
+    animation: slideIn 0.5s ease-out;
+}
+
+.progress-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Effet de brillance sur les boutons */
+.nav-btn.next::after, .nav-btn.publish::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.nav-btn.next:hover::after, .nav-btn.publish:hover::after {
+    opacity: 1;
+    transform: rotate(45deg) translate(50%, 50%);
+}
+    </style>
+</head>
+<body>
+    <div class="publication-wrapper">
+        <!-- Header Principal -->
+        <header class="header-container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="/image/logodalal.jpg" alt="Logo Dalal Sénégal">
+                    <div class="logo-text">Dalal</div>
+                </div>
+                
+                <!-- Navigation Desktop -->
+                <nav class="desktop-nav">
+                    <a href="logement.html">Logement</a>
+                    <a href="transport.html">Transport</a>
+                    <a href="decouverte.html">Découverte</a>
+                    <a href="/Security/identification/backend identif/index.html">s'inscrire</a> 
+                    <a href="plus.html">Plus</a>
+                </nav>
+                
+                <!-- Menu Burger -->
+                <button class="menu-toggle" aria-label="Ouvrir le menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Navigation Mobile -->
+                <nav class="mobile-nav">
+                    <button class="close-menu" aria-label="Fermer le menu">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <ul>
+                        <li><a href="logement.html">Logement</a></li>
+                        <li><a href="transport.html">Transport</a></li>
+                        <li><a href="decouverte.html">Découverte</a></li>
+                        <li><a href="/Security/identification/backend identif/index.html">s'inscrire</a></li>
+                        <li><a href="plus.html">Plus</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="publication-container">
+            <!-- Progress Steps -->
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="progress-line">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="step completed" id="step1">
+                        <div class="step-number">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="step-text">Informations véhicule</div>
+                    </div>
+                    <div class="step active" id="step2">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Photos & contact</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pages Container -->
+            <div class="pages-container">
+                <!-- PAGE 1 - Informations Véhicule -->
+                <div id="page1" class="page active">
+                    <div class="form-container">
+                        <div class="form-section">
+                            <div class="section-header">
+                                <h1 class="section-title">Informations du véhicule</h1>
+                                <p class="section-subtitle">Renseignez les caractéristiques principales de votre véhicule</p>
+                            </div>
+
+                            <form id="car-form-step1">
+                                <div class="form-group">
+                                    <label for="marque" class="required">Marque du véhicule</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-car input-icon"></i>
+                                        <input type="text" id="marque" name="marque" class="form-input" placeholder="Ex: Toyota" required>
+                                    </div>
+                                    <div class="error-message">Veuillez saisir la marque du véhicule</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="modele" class="required">Modèle du véhicule</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-car-side input-icon"></i>
+                                        <input type="text" id="modele" name="modele" class="form-input" placeholder="Ex: Corolla" required>
+                                    </div>
+                                    <div class="error-message">Veuillez saisir le modèle du véhicule</div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="annee" class="required">Année</label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-calendar-alt input-icon"></i>
+                                            <input type="text" id="annee" name="annee" class="form-input" placeholder="Ex: 2020" required>
+                                        </div>
+                                        <div class="error-message">Veuillez saisir une année valide</div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="kilometrage" class="required">Kilométrage</label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-tachometer-alt input-icon"></i>
+                                            <input type="text" id="kilometrage" name="kilometrage" class="form-input" placeholder="Ex: 45000" required>
+                                        </div>
+                                        <div class="error-message">Veuillez saisir un kilométrage valide</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="carburant" class="required">Carburant</label>
+                                        <select id="carburant" name="carburant" class="form-select" required>
+                                            <option value="">Sélectionnez</option>
+                                            <option value="essence">Essence</option>
+                                            <option value="diesel">Diesel</option>
+                                            <option value="electrique">Électrique</option>
+                                            <option value="hybride">Hybride</option>
+                                        </select>
+                                        <div class="error-message">Veuillez sélectionner un type de carburant</div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="transmission" class="required">Transmission</label>
+                                        <select id="transmission" name="transmission" class="form-select" required>
+                                            <option value="">Sélectionnez</option>
+                                            <option value="manuelle">Manuelle</option>
+                                            <option value="automatique">Automatique</option>
+                                        </select>
+                                        <div class="error-message">Veuillez sélectionner un type de transmission</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">
+                                        Description
+                                        <span class="tooltip">
+                                            <i class="fas fa-question-circle"></i>
+                                            <span class="tooltip-text">Décrivez brièvement l'état et les caractéristiques de votre véhicule</span>
+                                        </span>
+                                    </label>
+                                    <textarea id="description" name="description" class="form-textarea" placeholder="Décrivez votre véhicule..." rows="4"></textarea>
+                                    <div class="char-count"><span id="char-count">0</span>/500 caractères</div>
+                                </div>
+
+                                <div class="button-group">
+                                    <button type="button" class="nav-btn prev" id="prev-btn1" disabled>
+                                        <i class="fas fa-arrow-left"></i> Précédent
+                                    </button>
+                                    <button type="button" class="nav-btn next" id="next-btn1">
+                                        Suivant <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE 2 - Photos & Contact -->
+                <div id="page2" class="page hidden">
+                    <div class="form-container">
+                        <div class="form-section">
+                            <div class="section-header">
+                                <h1 class="section-title">Photos & contact</h1>
+                                <p class="section-subtitle">Ajoutez des photos et vos informations de contact</p>
+                            </div>
+
+                            <form id="car-form-step2">
+                                <div class="form-group">
+                                    <label for="photos" class="required">Photos du véhicule</label>
+                                    <div class="upload-area" id="upload-area">
+                                        <div class="upload-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <div class="upload-text">Cliquez ou glissez-déposez vos photos</div>
+                                        <div class="upload-hint">Formats acceptés: JPG, PNG (max. 5MB par image)</div>
+                                        <input type="file" id="photos" name="photos" class="file-input" accept="image/*" multiple>
+                                    </div>
+                                    <div class="preview-container" id="preview-container"></div>
+                                    <div class="error-message">Veuillez ajouter au moins une photo</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="price" class="required">Prix (FCFA)</label>
+                                    <div class="price-input">
+                                        <span class="price-symbol">FCFA</span>
+                                        <input type="text" id="price" name="price" class="form-input" placeholder="Ex: 4 500 000" required>
+                                    </div>
+                                    <div class="error-message">Veuillez saisir un prix valide</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contact" class="required">Contact téléphonique</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-phone input-icon"></i>
+                                        <input type="tel" id="contact" name="contact" class="form-input" placeholder="Ex: +221 77 123 45 67" required>
+                                    </div>
+                                    <div class="error-message">Veuillez saisir un numéro de téléphone valide</div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="city" class="required">Ville</label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-map-marker-alt input-icon"></i>
+                                            <input type="text" id="city" name="city" class="form-input" placeholder="Ex: Dakar" required>
+                                        </div>
+                                        <div class="error-message">Veuillez saisir votre ville</div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="neighborhood">Quartier</label>
+                                        <input type="text" id="neighborhood" name="neighborhood" class="form-input" placeholder="Ex: Ouest Foire">
+                                    </div>
+                                </div>
+
+                                <div class="button-group">
+                                    <button type="button" class="nav-btn prev" id="prev-btn2">
+                                        <i class="fas fa-arrow-left"></i> Précédent
+                                    </button>
+                                    <button type="submit" class="nav-btn publish" id="publish-btn">
+                                        <i class="fas fa-paper-plane"></i> Publier l'annonce
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="confirmation-modal" id="confirmation-modal">
+        <div class="confirmation-content">
+            <div class="confirmation-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="confirmation-title">Annonce publiée avec succès !</h2>
+            <p class="confirmation-text">Votre annonce a été publiée et est maintenant visible par les acheteurs potentiels. Vous serez notifié dès qu'un acheteur manifestera de l'intérêt.</p>
+            <button class="nav-btn publish" id="close-confirmation">
+                <i class="fas fa-home"></i> Retour à l'accueil
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Variables globales
+            let currentPage = 1;
+            let uploadedFiles = [];
+            let formData = {};
+
+            // Éléments DOM
+            const pages = document.querySelectorAll('.page');
+            const progressFill = document.getElementById('progress-fill');
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const prevBtn1 = document.getElementById('prev-btn1');
+            const nextBtn1 = document.getElementById('next-btn1');
+            const prevBtn2 = document.getElementById('prev-btn2');
+            const publishBtn = document.getElementById('publish-btn');
+            const confirmationModal = document.getElementById('confirmation-modal');
+            const closeConfirmation = document.getElementById('close-confirmation');
+            const charCount = document.getElementById('char-count');
+            const description = document.getElementById('description');
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('photos');
+            const previewContainer = document.getElementById('preview-container');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeMenu = document.querySelector('.close-menu');
+
+            // Navigation mobile
+            menuToggle.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+            });
+
+            closeMenu.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+            });
+
+            // Fermer le menu mobile en cliquant sur un lien
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileNav.classList.remove('active');
+                });
+            });
+
+            // Initialisation
+            updateProgress();
+
+            // Navigation entre les pages
+            nextBtn1.addEventListener('click', function() {
+                if (validateStep1()) {
+                    saveStep1Data();
+                    showPage(2);
+                }
+            });
+
+            prevBtn2.addEventListener('click', function() {
+                showPage(1);
+            });
+
+            // Gestion de l'upload de photos
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length > 0) {
+                    handleFiles(e.dataTransfer.files);
+                }
+            });
+
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    handleFiles(this.files);
+                }
+            });
+
+            // Compteur de caractères pour la description
+            description.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
+
+            // Validation et soumission du formulaire
+            document.getElementById('car-form-step2').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateStep2()) {
+                    publishAnnouncement();
+                }
+            });
+
+            // Fermeture de la modal de confirmation
+            closeConfirmation.addEventListener('click', function() {
+                confirmationModal.style.display = 'none';
+                // Redirection vers la page d'accueil
+                // window.location.href = 'index.html';
+            });
+
+            // Fonctions de navigation
+            function showPage(pageNumber) {
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                    page.classList.add('hidden');
+                });
+                
+                document.getElementById(`page${pageNumber}`).classList.remove('hidden');
+                document.getElementById(`page${pageNumber}`).classList.add('active');
+                
+                currentPage = pageNumber;
+                updateProgress();
+            }
+
+            function updateProgress() {
+                const progress = currentPage === 1 ? '0%' : '100%';
+                progressFill.style.width = progress;
+                
+                if (currentPage === 1) {
+                    step1.classList.add('completed');
+                    step2.classList.remove('active');
+                    step1.classList.add('active');
+                } else {
+                    step1.classList.add('completed');
+                    step2.classList.add('active');
+                    step1.classList.remove('active');
+                }
+            }
+
+            // Gestion des fichiers
+            function handleFiles(files) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    
+                    if (!file.type.match('image.*')) {
+                        showError('Seules les images sont autorisées');
+                        continue;
+                    }
+                    
+                    if (file.size > 5 * 1024 * 1024) {
+                        showError('L\'image ' + file.name + ' est trop volumineuse (max. 5MB)');
+                        continue;
+                    }
+                    
+                    uploadedFiles.push(file);
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'preview-item';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = 'Aperçu de l\'image';
+                        
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'remove-image';
+                        removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                        removeBtn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const index = uploadedFiles.indexOf(file);
+                            if (index > -1) {
+                                uploadedFiles.splice(index, 1);
+                            }
+                            previewItem.remove();
+                            validatePhotos();
+                        });
+                        
+                        previewItem.appendChild(img);
+                        previewItem.appendChild(removeBtn);
+                        previewContainer.appendChild(previewItem);
+                        
+                        validatePhotos();
+                    };
+                    reader.readAsDataURL(file);
+                }
+                
+                fileInput.value = '';
+            }
+
+            // Validation des étapes
+            function validateStep1() {
+                let isValid = true;
+                const fields = ['marque', 'modele', 'annee', 'kilometrage', 'carburant', 'transmission'];
+                
+                fields.forEach(field => {
+                    const element = document.getElementById(field);
+                    const formGroup = element.closest('.form-group');
+                    const errorMessage = formGroup.querySelector('.error-message');
+                    
+                    formGroup.classList.remove('error', 'success');
+                    
+                    if (element.hasAttribute('required') && !element.value.trim()) {
+                        isValid = false;
+                        formGroup.classList.add('error');
+                        errorMessage.textContent = 'Ce champ est obligatoire';
+                    } else if (field === 'annee') {
+                        const year = parseInt(element.value);
+                        const currentYear = new Date().getFullYear();
+                        if (isNaN(year) || year < 1900 || year > currentYear + 1) {
+                            isValid = false;
+                            formGroup.classList.add('error');
+                            errorMessage.textContent = `Veuillez saisir une année valide (1900-${currentYear + 1})`;
+                        } else {
+                            formGroup.classList.add('success');
+                        }
+                    } else if (field === 'kilometrage') {
+                        const km = parseInt(element.value.replace(/\s/g, ''));
+                        if (isNaN(km) || km < 0 || km > 1000000) {
+                            isValid = false;
+                            formGroup.classList.add('error');
+                            errorMessage.textContent = 'Veuillez saisir un kilométrage valide';
+                        } else {
+                            formGroup.classList.add('success');
+                        }
+                    } else {
+                        formGroup.classList.add('success');
+                    }
+                });
+                
+                return isValid;
+            }
+
+            function validateStep2() {
+                let isValid = true;
+                const fields = ['price', 'contact', 'city'];
+                
+                // Validation des champs de formulaire
+                fields.forEach(field => {
+                    const element = document.getElementById(field);
+                    const formGroup = element.closest('.form-group');
+                    const errorMessage = formGroup.querySelector('.error-message');
+                    
+                    formGroup.classList.remove('error', 'success');
+                    
+                    if (!element.value.trim()) {
+                        isValid = false;
+                        formGroup.classList.add('error');
+                        errorMessage.textContent = 'Ce champ est obligatoire';
+                    } else if (field === 'contact') {
+                        const phoneRegex = /^(\+221|00221)?[ -]?(77|78|76|70)[ -]?(\d{3}[ -]?\d{2}[ -]?\d{2}|\d{7})$/;
+                        if (!phoneRegex.test(element.value.replace(/\s/g, ''))) {
+                            isValid = false;
+                            formGroup.classList.add('error');
+                            errorMessage.textContent = 'Veuillez saisir un numéro de téléphone valide';
+                        } else {
+                            formGroup.classList.add('success');
+                        }
+                    } else if (field === 'price') {
+                        const price = parseInt(element.value.replace(/\s/g, ''));
+                        if (isNaN(price) || price < 0 || price > 1000000000) {
+                            isValid = false;
+                            formGroup.classList.add('error');
+                            errorMessage.textContent = 'Veuillez saisir un prix valide';
+                        } else {
+                            formGroup.classList.add('success');
+                        }
+                    } else {
+                        formGroup.classList.add('success');
+                    }
+                });
+                
+                // Validation des photos
+                if (!validatePhotos()) {
+                    isValid = false;
+                }
+                
+                return isValid;
+            }
+
+            function validatePhotos() {
+                const formGroup = document.querySelector('#page2 .form-group:first-child');
+                const errorMessage = formGroup.querySelector('.error-message');
+                
+                if (uploadedFiles.length === 0) {
+                    formGroup.classList.add('error');
+                    errorMessage.style.display = 'block';
+                    return false;
+                } else {
+                    formGroup.classList.remove('error');
+                    errorMessage.style.display = 'none';
+                    return true;
+                }
+            }
+
+            // Sauvegarde des données
+            function saveStep1Data() {
+                const fields = ['marque', 'modele', 'annee', 'kilometrage', 'carburant', 'transmission', 'description'];
+                fields.forEach(field => {
+                    formData[field] = document.getElementById(field).value;
+                });
+            }
+
+            // Publication de l'annonce
+            function publishAnnouncement() {
+                publishBtn.disabled = true;
+                publishBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publication en cours...';
+                publishBtn.classList.add('loading');
+                
+                // Simulation de délai de publication
+                setTimeout(() => {
+                    publishBtn.classList.remove('loading');
+                    confirmationModal.style.display = 'flex';
+                    
+                    // Réinitialiser le formulaire pour une nouvelle publication
+                    setTimeout(() => {
+                        document.getElementById('car-form-step1').reset();
+                        document.getElementById('car-form-step2').reset();
+                        previewContainer.innerHTML = '';
+                        uploadedFiles = [];
+                        formData = {};
+                        charCount.textContent = '0';
+                        showPage(1);
+                        publishBtn.disabled = false;
+                        publishBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Publier l\'annonce';
+                    }, 2000);
+                }, 2000);
+            }
+
+            // Fonction d'affichage d'erreur
+            function showError(message) {
+                // Créer une notification toast
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--error);
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: var(--radius-sm);
+                    box-shadow: var(--shadow-lg);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                    max-width: 300px;
+                `;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 4000);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation du Code - Dalal Sénégal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            color: #2E5E4E;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            color: #2E5E4E;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .code-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .code-input {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .code-input:focus {
+            border-color: #2E5E4E;
+            outline: none;
+        }
+
+        .btn {
+            background: #2E5E4E;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            background: #1e4a3a;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .links a {
+            color: #2E5E4E;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Dalal Sénégal</div>
+        <h1 class="title">Confirmez votre code</h1>
+        <p class="subtitle">
+            Entrez le code à 6 chiffres envoyé à votre email
+        </p>
+
+        <div class="error" id="errorMessage">Code incorrect. Veuillez réessayer.</div>
+
+        <div class="code-inputs">
+            <input type="text" maxlength="1" class="code-input" data-index="1">
+            <input type="text" maxlength="1" class="code-input" data-index="2">
+            <input type="text" maxlength="1" class="code-input" data-index="3">
+            <input type="text" maxlength="1" class="code-input" data-index="4">
+            <input type="text" maxlength="1" class="code-input" data-index="5">
+            <input type="text" maxlength="1" class="code-input" data-index="6">
+        </div>
+
+        <button class="btn" id="verifyBtn">Vérifier le code</button>
+
+        <div class="links">
+            <a href="#" id="resendLink">Renvoyer le code</a>
+            <a href="#" id="backLink">← Retour</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeInputs = document.querySelectorAll('.code-input');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const resendLink = document.getElementById('resendLink');
+            const backLink = document.getElementById('backLink');
+
+            // Navigation automatique entre les champs
+            codeInputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1 && index < codeInputs.length - 1) {
+                        codeInputs[index + 1].focus();
+                    }
+                    errorMessage.style.display = 'none';
+                });
+
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                        codeInputs[index - 1].focus();
+                    }
+                });
+            });
+
+            // Vérification du code
+            verifyBtn.addEventListener('click', function() {
+                let code = '';
+                codeInputs.forEach(input => {
+                    code += input.value;
+                });
+
+                if (code.length !== 6) {
+                    errorMessage.textContent = 'Veuillez entrer les 6 chiffres du code';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+
+                // Simulation de vérification
+                verifyBtn.textContent = 'Vérification...';
+                verifyBtn.disabled = true;
+
+                setTimeout(() => {
+                    // Ici vous ajouterez la vraie vérification avec votre backend
+                    alert('Code vérifié avec succès !');
+                    verifyBtn.textContent = 'Vérifier le code';
+                    verifyBtn.disabled = false;
+                }, 2000);
+            });
+
+            // Renvoyer le code
+            resendLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Un nouveau code a été envoyé à votre email');
+            });
+
+            // Retour
+            backLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Retour à la page précédente');
+            });
+        });
+    </script>
+</body>
+</html>

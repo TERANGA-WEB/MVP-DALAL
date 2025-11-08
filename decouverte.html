@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalal Pro - Découvrez le Sénégal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2E5E4E;
+            --secondary: #E1C85C;
+            --white: #FFFFFF;
+            --light-bg: #f5f7fa;
+            --gray: #e1e8ed;
+            --dark-gray: #333333;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 5%;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .desktop-nav {
+            display: flex;
+            gap: 35px;
+        }
+
+        .desktop-nav a {
+            text-decoration: none;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .desktop-nav a:hover {
+            color: var(--secondary);
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Header Section */
+        .discovery-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        .discovery-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .discovery-subtitle {
+            color: #2E5E4E;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        /* Filters */
+        .filters-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 90%;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #2E5E4E;
+            color: #2E5E4E;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 16px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            text-decoration: none;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #2E5E4E;
+            color: white;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 60px 0;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: #666;
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+            margin-bottom: 40px;
+        }
+
+        .discovery-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e8ed;
+        }
+
+        .discovery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #2E5E4E;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .card-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .card-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 94, 78, 0.3);
+        }
+
+        /* Voir Plus Button */
+        .voir-plus-container {
+            text-align: center;
+            margin-top: 30px;
+            padding: 0 20px;
+        }
+
+        .voir-plus-btn {
+            background: linear-gradient(135deg, #2E5E4E 0%, #1e4a3a 100%);
+            color: #E1C85C;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+        .voir-plus-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 94, 78, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .main-content {
+                margin-top: 80px;
+                padding: 15px;
+            }
+            
+            .discovery-title {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filters {
+                max-width: 100%;
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                margin-top: 70px;
+                padding: 10px;
+            }
+
+            .discovery-title {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .card-image {
+                height: 160px;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .filters {
+                gap: 6px;
+            }
+            
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="logodalal.jpg" alt="Logo Dalal Sénégal">
+                <div class="logo-text">Dalal</div>
+            </div>
+            
+            <nav class="desktop-nav">
+                <a href="/logement.html">Logement</a>
+                <a href="/transport.html">Transport</a>
+                <a href="/decouverte.html">Découverte</a>
+                <a href="creecompte.html">s'inscrire</a> 
+                <a href="/plus.html">Plus</a>
+            </nav>
+            
+            <button class="menu-toggle" aria-label="Ouvrir le menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Header Section -->
+        <div class="discovery-header">
+            <h1 class="discovery-title">Dalal Pro</h1>
+            <p class="discovery-subtitle">Découvrez nos expériences disponibles</p>
+            
+            <!-- Filters -->
+            <div class="filters-container">
+                <div class="filters">
+                    <a href="" class="filter-btn active">Restaurants</a>
+                    <a href="#lieux-incontournables" class="filter-btn">Lieux Incontournables</a>
+                    <a href="#culture-tradition" class="filter-btn">Culture & Tradition</a>
+                    <a href="bonus/evenement/festival.html" class="filter-btn">Festival & Événement</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Restaurants -->
+        <section id="restaurants" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Restaurants au Sénégal</h2>
+                <p class="section-subtitle">Découvrez la gastronomie sénégalaise authentique dans nos établissements sélectionnés</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="discovery-card">
+                    <img src="RESTAURANT1.jpg" alt="Le Baobab Gourmand" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Le Baobab Gourmand</h3>
+                        <p class="card-description">Spécialités de poissons et fruits de mer préparés selon les recettes locales. Ambiance chaleureuse et service authentique avec animation musicale traditionnelle tous les vendredis soir.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Spécialités locales</span>
+                            <span class="feature-tag">Animation musicale</span>
+                            <span class="feature-tag">Vue sur mer</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-utensils"></i>
+                            Découvrir le restaurant
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="discovery-card">
+                    <img src="RESTAURANT3.jpg" alt="La Calebasse" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">La Calebasse</h3>
+                        <p class="card-description">Cuisine traditionnelle sénégalaise dans un cadre élégant. Le thiéboudienne maison est particulièrement réputé. Soirées danses traditionnelles et démonstrations culinaires les weekends.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Cuisine traditionnelle</span>
+                            <span class="feature-tag">Danse traditionnelle</span>
+                            <span class="feature-tag">Cadre élégant</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-utensils"></i>
+                            Découvrir le restaurant
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="discovery-card">
+                    <img src="RESTAURANT2.jpg" alt="Teranga Café" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Teranga Café</h3>
+                        <p class="card-description">Une expérience culinaire moderne qui réinvente les saveurs traditionnelles sénégalaises. Cadre design et ambiance détendue avec concerts acoustiques et poésie tous les jeudis soir.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Fusion moderne</span>
+                            <span class="feature-tag">Concerts acoustiques</span>
+                            <span class="feature-tag">Ambiance détendue</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-utensils"></i>
+                            Découvrir le restaurant
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voir Plus Button -->
+            <div class="voir-plus-container">
+                <a href=".html" class="voir-plus-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    Voir tous les restaurants
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 2: Lieux Incontournables -->
+        <section id="lieux-incontournables" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Lieux Incontournables</h2>
+                <p class="section-subtitle">Visitez les sites emblématiques qui font la renommée du Sénégal</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="discovery-card">
+                    <img src="Gorée ( Sénégal).jpg" alt="Île de Gorée" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Île de Gorée</h3>
+                        <p class="card-description">Classée au patrimoine mondial de l'UNESCO, cette île historique fut le plus grand centre de commerce d'esclaves de la côte africaine. Visitez la Maison des Esclaves et ses musées émouvants.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Patrimoine UNESCO</span>
+                            <span class="feature-tag">Site historique</span>
+                            <span class="feature-tag">Visites guidées</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Découvrir ce lieu
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="discovery-card">
+                    <img src="Saly, Senegal.jpg" alt="Lac Rose" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Lac Rose</h3>
+                        <p class="card-description">Connu pour sa couleur rose unique due à la présence d'un micro-organisme, ce lac est l'un des sites les plus photographiés du Sénégal. Observez les récolteurs de sel et profitez des balades en 4x4.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Phénomène naturel</span>
+                            <span class="feature-tag">Activités 4x4</span>
+                            <span class="feature-tag">Photographie</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Découvrir ce lieu
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="discovery-card">
+                    <img src="Lac Rose, Senegal.jpg" alt="Plages de Saly" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Plages de Saly</h3>
+                        <p class="card-description">Des kilomètres de plages de sable fin bordées de cocotiers, idéales pour la détente et les sports nautiques. Destination balnéaire prisée avec de nombreuses activités et une vie nocturne animée.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Plage de sable fin</span>
+                            <span class="feature-tag">Sports nautiques</span>
+                            <span class="feature-tag">Destination balnéaire</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Découvrir ce lieu
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voir Plus Button -->
+            <div class="voir-plus-container">
+                <a href="lieux-incontournables.html" class="voir-plus-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    Découvrir tous les lieux
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 3: Culture & Tradition -->
+        <section id="culture-tradition" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Culture & Tradition</h2>
+                <p class="section-subtitle">Plongez au cœur des traditions et de la culture sénégalaise authentique</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="discovery-card">
+                    <img src="KANKURANG.jpg" alt="Kankurang" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Rituel du Kankurang</h3>
+                        <p class="card-description">Découvrez le Kankurang, personnage central des rites d'initiation mandingues. Cette figure mythique, vêtue d'écorces, incarne l'ordre et la justice et protège la communauté contre les mauvais esprits.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Rite initiatique</span>
+                            <span class="feature-tag">Patrimoine culturel</span>
+                            <span class="feature-tag">Tradition mandingue</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-mask"></i>
+                            En savoir plus
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="discovery-card">
+                    <img src="FESTIVAL PEULH.jpg" alt="Festival Peulh" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Festivals Traditionnels</h3>
+                        <p class="card-description">Participez aux festivals peuls mettant en valeur l'élevage, la musique et les danses traditionnelles. Ces célébrations colorées sont l'occasion de découvrir la riche culture pastorale des communautés peules.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Festival peulh</span>
+                            <span class="feature-tag">Culture pastorale</span>
+                            <span class="feature-tag">Célébrations</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-music"></i>
+                            En savoir plus
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="discovery-card">
+                    <img src="LUTTE SENEGALAISE .jpg" alt="Lutte Sénégalaise" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Lutte Sénégalaise</h3>
+                        <p class="card-description">La lutte sénégalaise, plus qu'un sport, est un véritable phénomène culturel. Assistez aux combats accompagnés de chants, de danses et de rituels mystiques qui en font un spectacle unique au monde.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Sport traditionnel</span>
+                            <span class="feature-tag">Spectacle culturel</span>
+                            <span class="feature-tag">Rituels mystiques</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-fist-raised"></i>
+                            En savoir plus
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voir Plus Button -->
+            <div class="voir-plus-container">
+                <a href="culture-tradition.html" class="voir-plus-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    En savoir plus sur notre culture
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 4: Festival & Événement -->
+        <section id="festivals-evenements" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Festival & Événement</h2>
+                <p class="section-subtitle">Vivez l'effervescence des festivals et événements culturels du Sénégal</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="discovery-card">
+                    <img src="DaVido ♡.jpg" alt="Festival du Sahel" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Festival du Sahel</h3>
+                        <p class="card-description">Grand rassemblement culturel annuel célébrant les traditions sahéliennes. Musique traditionnelle, danses, artisanat et gastronomie au programme de cet événement incontournable.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Culture sahélienne</span>
+                            <span class="feature-tag">Musique traditionnelle</span>
+                            <span class="feature-tag">Artisanat local</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-calendar-alt"></i>
+                            Voir le programme
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="discovery-card">
+                    <img src="CFMOTO ranks fifth in the seventh stage of the Dakar Rally 2024, and is currently fifth in the ov___.jpg" alt="Biennale de l'Art Africain" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Biennale de l'Art Africain</h3>
+                        <p class="card-description">Événement majeur de l'art contemporain africain réunissant artistes, galeristes et collectionneurs du monde entier. Expositions, performances et conférences au programme.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Art contemporain</span>
+                            <span class="feature-tag">Expositions</span>
+                            <span class="feature-tag">Rencontres artistiques</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-palette"></i>
+                            Voir le programme
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="discovery-card">
+                    <img src="Youth Olympic Games Dakar 2026 plans on track with four years to go.jpg" alt="Fête de l'Indépendance" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">Fête de l'Indépendance</h3>
+                        <p class="card-description">Célébrations nationales marquant l'indépendance du Sénégal. Défilés militaires, spectacles culturels et animations dans toutes les villes du pays.</p>
+                        <div class="card-features">
+                            <span class="feature-tag">Célébration nationale</span>
+                            <span class="feature-tag">Défilés</span>
+                            <span class="feature-tag">Spectacles</span>
+                        </div>
+                        <a href="#" class="card-btn">
+                            <i class="fas fa-flag"></i>
+                            Voir le programme
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voir Plus Button -->
+            <div class="voir-plus-container">
+                <a href="festivals-evenements.html" class="voir-plus-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    Voir tous les festivals
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Dalal Pro</h3>
+                <p>Votre partenaire de confiance pour découvrir les richesses du Sénégal.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Suivez-nous sur Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Suivez-nous sur Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Suivez-nous sur Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Suivez-nous sur YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Nos Services</h3>
+                <ul>
+                    <li><a href="logement.html">Logement meublé</a></li>
+                    <li><a href="transport.html">Location voiture</a></li>
+                    <li><a href="decouverte.html">Excursions</a></li>
+                    <li><a href="/ecouverte.html">Circuits sur mesure</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> info@dalalpro.sn</li>
+                    <li><i class="fas fa-phone"></i> +221 33 123 45 67</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 Dalal Pro. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation par filtres
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const sections = document.querySelectorAll('.content-section');
+            
+            // Gestion des clics sur les filtres
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Retirer la classe active de tous les boutons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.add('active');
+                    
+                    // Obtenir la cible du filtre
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // Scroll vers la section cible
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 120,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Animation des cartes au scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observer les cartes
+            document.querySelectorAll('.discovery-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Gestion des boutons de carte
+            document.querySelectorAll('.card-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const card = this.closest('.discovery-card');
+                    const title = card.querySelector('.card-title').textContent;
+                    alert(`Ouverture de la page détaillée pour : ${title}`);
+                });
+            });
+
+            // Gestion des boutons "Voir plus"
+            document.querySelectorAll('.voir-plus-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.closest('.content-section');
+                    const title = section.querySelector('.section-title').textContent;
+                    alert(`Redirection vers la page complète : ${title}`);
+                    // Décommentez la ligne suivante pour activer la redirection réelle
+                    // window.location.href = this.getAttribute('href');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
